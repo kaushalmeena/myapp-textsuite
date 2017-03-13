@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+	<div class="well text-center">
+		<div class="btn-group" role="group" aria-label="...">
+			<button onclick="openImage()" id="btn-1" type="button" class="btn btn-primary btn-lg">
+			<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+			</button>
+			<button onclick="openWebCam()" id="btn-2" type="button" class="btn btn-default btn-lg">
+			<span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+			</button>
+		</div>
+		<img hidden id="image" src="#" alt="image">
+	</div>
+	<form action="{{ url_for( 'showHome' ) }}" method="post">
+		<input hidden onchange="readURL(this);" id="image_upload" type="file" name="image_upload" accept="image/gif, image/jpeg, image/png">
+		<input hidden id="image_container" type="text" name="image_container"></input>
+		<button disabled id="btn-3" type="submit" value="Convert" class="btn btn-success btn-lg">
+		<span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Convert
+		</button>
+	</form>
+	{% if ocrResult %}
+		<div class="well" id="ocr_results">{{ocrResult}}</div>
+	{% endif %}
+{% endblock %}
