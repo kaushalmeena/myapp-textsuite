@@ -1,22 +1,15 @@
-# [Project : Item Catalog]
+# [Project : WebCamOCR]
 
-## [ Synopsis ]
+### [ Synopsis ]
+A web app which uses ocrapi API to convert image to text via webcam.
 
-A web application that lets user to create and teach their own custom chatbots.
+### [Prerequisities]
+- OCR API Key
+     1. Register at http://eepurl.com/bOLOcf
+     2. After registering check out your email for your API key.
+     3. Initialise the 'api_key' variable with your API key in api_key.json file located in secret folder of main directory.
 
-## [ Usage ]
-
-Next you have to create the makemybot.db To do so run in database folder
-~~~~
-python database_setup.py
-~~~~
-
-Optional : To fill dummyrecords in database run in database folder
-~~~~
-python dummyrecords.py
-~~~~
-## [ Run ]
-
+### [Usage]
 To start the app simply run
 ~~~~
 python main.py
