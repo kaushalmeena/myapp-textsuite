@@ -1,12 +1,17 @@
 button {
-	width: 150px;
+    width: 120px;
 }
-
 #image_upload {
-	display: none;
+    display: none;
 }
-
 #ocr_image {
-	max-height: 300px;
+    max-height: 300px;
 }
-
+#ocr_camera {
+    width: 640px;
+    height: 480px;
+}
+#webcam_div,
+#camera_buttons {
+    margin-top: 10px;
+}

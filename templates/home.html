@@ -10,6 +10,17 @@
 			</button>
 		</div>
 		<img hidden id="ocr_image" src="#" alt="ocr_image">
+		<div hidden id="webcam_div" class="well text-center">
+			<div class="center-block" id="ocr_camera"></div>
+			<div id="camera_buttons" class="btn-group" role="group" aria-label="...">
+				<button onclick="takeSnapshot()" type="button" class="btn btn-primary btn-lg">
+				<span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>
+				</button>
+				<button onclick="stopCamera()" type="button" class="btn btn-default btn-lg">
+				<span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+				</button>
+			</div>
+		</div>
 	</div>
 	<form action="{{ url_for( 'showHome' ) }}" method="post">
 		<input hidden onchange="readURL(this);" id="image_upload" type="file" name="image_upload" accept="image/gif, image/jpeg, image/png">

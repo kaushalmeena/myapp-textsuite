@@ -1,32 +1,28 @@
 <html>
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		
-		<!-- JQUERY -->
+		<!-- https://jquery.com/ -->
 		<script src="{{ url_for( 'static', filename='js/jquery-3.1.1.min.js' ) }}"></script>
-		
-		<!-- BOOTSTRAP -->
+		<!-- http://getbootstrap.com/ -->
 		<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-		
+		<!-- https://pixlcore.com/read/WebcamJS -->
+		<script src="{{ url_for('static', filename='js/webcam.min.js') }}"></script>
 		<!-- CUSTOM-FAVICON -->
 		<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
-		
 		<!-- CUSTOM-STYLESHEET -->
 		<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/custom-styles.css') }}">
-		
 		<!-- CUSTOM-SCRIPT -->
 		<script src="{{ url_for( 'static', filename='js/custom-scripts.js' ) }}"></script>
 		<title>WebCamOCR</title>
 	</head>
 	<body>
-	<div class="container">
-	<header>
-		<div class="jumbotron">
-		<img class="img-responsive center-block" src="{{ url_for( 'static', filename='img/logo.png' ) }}" alt="logo-image">
+		<div class="container">
+			<header>
+				<div class="jumbotron">
+					<img class="img-responsive center-block" src="{{ url_for( 'static', filename='img/logo.png' ) }}" alt="logo-image">
+				</div>
+			</header>
+			{% block content %}{% endblock %}
 		</div>
-	</header>
-	{% block content %}
-	{% endblock %}
-	</div>	
 	</body>
-	</html>
+</html>
