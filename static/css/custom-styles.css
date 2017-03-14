@@ -1,4 +1,12 @@
+button {
+	width: 150px;
+}
+
 #image_upload {
 	display: none;
+}
+
+#ocr_image {
+	max-height: 300px;
 }
 

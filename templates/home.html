@@ -9,13 +9,16 @@
 			<span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
 			</button>
 		</div>
-		<img hidden id="image" src="#" alt="image">
+		<img hidden id="ocr_image" src="#" alt="ocr_image">
 	</div>
 	<form action="{{ url_for( 'showHome' ) }}" method="post">
 		<input hidden onchange="readURL(this);" id="image_upload" type="file" name="image_upload" accept="image/gif, image/jpeg, image/png">
 		<input hidden id="image_container" type="text" name="image_container"></input>
 		<button disabled id="btn-3" type="submit" value="Convert" class="btn btn-success btn-lg">
 		<span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Convert
+		</button>
+		<button disabled onclick="resetImage()" id="btn-4" type="button" value="Reset" class="btn btn-warning btn-lg">
+		<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Reset
 		</button>
 	</form>
 	{% if ocrResult %}

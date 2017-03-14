@@ -34,13 +34,14 @@ def showHome():
 
             response = requests.post(url=ocrUrl, data=ocrDat)
             jsonResult = response.json()
-            ocrResult = ''
+            ocrString = ''
 
             if jsonResult['ErrorMessage'] == None:
                 for item in jsonResult['ParsedResults']:
-                    ocrResult += item['ParsedText']
+                    ocrString += item['ParsedText']
+                ocrResult = ocrString
             else:
-                ocrResult += jsonResult['ErrorMessage']
+                ocrResult = jsonResult['ErrorMessage']
             
             return render_template('home.html',
                                     ocrResult=ocrResult)
