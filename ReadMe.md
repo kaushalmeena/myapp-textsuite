@@ -3,6 +3,8 @@
 ### [ Synopsis ]
 A web app which uses ocrapi API to convert image to text via webcam.
 
+- For live version visit page: https://myapp-webcamocr.herokuapp.com/
+
 ### [Prerequisities]
 - OCR API Key
      1. Register at http://eepurl.com/bOLOcf
