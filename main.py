@@ -26,22 +26,25 @@ port = int(os.environ.get('PORT', 5000))
 def showHome():
     """Handler for Home page which displays welcome message."""
     if request.method == 'POST':
-        if 'image_container' in request.form:
+        if 'imageContainer' in request.form:
 
             ocrKey = json.loads(open('secret/api_key.json', 'r').read())['ocrapi']['api_key']	
             ocrUrl = "https://api.ocr.space/parse/image"
-            ocrDat = { 'apikey': ocrKey, 'base64Image': request.form['image_container'] }
+            ocrDat = { 'apikey': ocrKey, 'base64Image': request.form['imageContainer'] }
 
             response = requests.post(url=ocrUrl, data=ocrDat)
             jsonResult = response.json()
             ocrString = ''
 
-            if jsonResult['ErrorMessage'] == None:
-                for item in jsonResult['ParsedResults']:
-                    ocrString += item['ParsedText']
-                ocrResult = ocrString
+            if 'ErrorMessage' in jsonResult:
+                if jsonResult['ErrorMessage'] == None:
+                    for item in jsonResult['ParsedResults']:
+                        ocrString += item['ParsedText']
+                        ocrResult = ocrString
+                else:
+                    ocrResult = jsonResult['ErrorMessage']
             else:
-                ocrResult = jsonResult['ErrorMessage']
+                ocrResult = jsonResult
             
             return render_template('home.html',
                                     ocrResult=ocrResult)

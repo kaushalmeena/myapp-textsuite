@@ -2,17 +2,17 @@
 {% block content %}
 	<div class="well text-center">
 		<div class="btn-group" role="group" aria-label="...">
-			<button onclick="openImage()" id="btn-1" type="button" class="btn btn-primary btn-lg">
+			<button onclick="openImage()" id="buttonOpen" type="button" class="btn btn-primary btn-lg">
 			<span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
 			</button>
-			<button onclick="openWebCam()" id="btn-2" type="button" class="btn btn-default btn-lg">
+			<button onclick="openCamera()" id="buttonCamera" type="button" class="btn btn-default btn-lg">
 			<span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
 			</button>
 		</div>
-		<img hidden id="ocr_image" src="#" alt="ocr_image">
-		<div hidden id="webcam_div" class="well text-center">
-			<div class="center-block" id="ocr_camera"></div>
-			<div id="camera_buttons" class="btn-group" role="group" aria-label="...">
+		<img hidden id="ocrImage" src="#" alt="ocrImage">
+		<div hidden id="cameraDiv" class="well text-center">
+			<div class="center-block" id="ocrCamera"></div>
+			<div id="cameraButtonGroup" class="btn-group" role="group" aria-label="...">
 				<button onclick="takeSnapshot()" type="button" class="btn btn-primary btn-lg">
 				<span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>
 				</button>
@@ -23,16 +23,28 @@
 		</div>
 	</div>
 	<form action="{{ url_for( 'showHome' ) }}" method="post">
-		<input hidden onchange="readURL(this);" id="image_upload" type="file" name="image_upload" accept="image/gif, image/jpeg, image/png">
-		<input hidden id="image_container" type="text" name="image_container"></input>
-		<button disabled id="btn-3" type="submit" value="Convert" class="btn btn-success btn-lg">
-		<span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Convert
-		</button>
-		<button disabled onclick="resetImage()" id="btn-4" type="button" value="Reset" class="btn btn-warning btn-lg">
-		<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Reset
-		</button>
+		<input hidden onchange="readURL(this);" id="imageUpload" type="file" name="imageUpload" accept="image/gif, image/jpeg, image/png">
+		<input hidden id="imageContainer" type="text" name="imageContainer"></input>
+		<div class="function-button-group">
+			<button disabled id="buttonConvert" type="submit" class="btn btn-success btn-lg">
+			<span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> Convert
+			</button>
+			<button disabled onclick="resetImage()" id="buttonReset" type="button" class="btn btn-warning btn-lg">
+			<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Reset
+			</button>
+		</div>
 	</form>
 	{% if ocrResult %}
-		<div class="well" id="ocr_results">{{ocrResult}}</div>
+	<div class="well">
+		<textarea id="ocrResult" class="form-control" rows="5">{{ocrResult}}</textarea>
+		<div class="function-button-group">
+			<button onclick="copyText()" type="button" class="btn btn-success btn-lg">
+			<span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Copy
+			</button>
+			<button onclick="talkText()" type="button" class="btn btn-warning btn-lg">
+			<span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span> Talk
+			</button>
+		</div>
+	</div>
 	{% endif %}
 {% endblock %}

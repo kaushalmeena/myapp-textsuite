@@ -1,17 +1,25 @@
+@media (max-width: 595px) { 
+	.function-button-group {
+		text-align: center;
+	}
+}
 button {
     width: 120px;
 }
-#image_upload {
+#imageUpload {
     display: none;
 }
-#ocr_image {
+#ocrImage {
     max-height: 300px;
 }
-#ocr_camera {
+#ocrCamera {
     width: 640px;
     height: 480px;
 }
-#webcam_div,
-#camera_buttons {
+#cameraDiv,
+#cameraButtonGroup {
     margin-top: 10px;
+}
+#ocrResult {
+	margin-bottom: 10px;
 }
