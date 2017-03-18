@@ -1,25 +1,39 @@
-@media (max-width: 595px) { 
-	.function-button-group {
-		text-align: center;
-	}
+@media (max-width: 595px) {
+    .form-button-group {
+        width: 100%;
+    }
+    .form-button-group button {
+        margin-top: 5px;
+        width: 100%;
+    }
 }
+
+body {
+    padding-top: 70px;
+}
+
 button {
-    width: 120px;
+    width: 140px;
 }
-#imageUpload {
-    display: none;
-}
+
 #ocrImage {
     max-height: 300px;
 }
+
+#ocrImageDiv {
+    text-align: center;
+}
+
 #ocrCamera {
     width: 640px;
     height: 480px;
 }
-#cameraDiv,
-#cameraButtonGroup {
-    margin-top: 10px;
+
+.font-size-medium {
+    font-size: 26px;
 }
-#ocrResult {
-	margin-bottom: 10px;
+
+#talkDiv {
+    width: 280px;
+    
 }

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+	<ol class="breadcrumb">
+		<li><a href="{{ url_for('showSource') }}">source</a></li>
+		<li><a href="#">image-url</a></li>
+	</ol>
+	<div class="thumbnail">
+		<div class="well">
+			<dl class="dl-horizontal font-size-medium">
+				<dt>step 2</dt>
+				<dd>enter url of image</dd>
+			</dl>
+			<div hidden id="ocrImageDiv" class="well">
+				<img onerror="resetUrl()" id="ocrImage" src="#" alt="ocr-image">
+			</div>
+			<div class="input-group">
+                <span class="input-group-btn">
+    				<button onclick="loadImage()" type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-link" aria-hidden="true"></span>&zwnj;
+					</button>
+                </span>
+                <input id="imageUrl" type="text" class="form-control" aria-label="...">
+            </div>
+			<br>
+			<form class="form-inline" action="{{ url_for( 'showOCR' ) }}" method="post">
+				<input hidden id="imageContainer" type="text" name="imageContainer"></input>
+				<input hidden id="imageSource" type="text" name="imageSource" value="2"></input>
+				<div class="form-button-group">
+					<button disabled id="buttonExtract" type="submit" class="btn btn-success btn-lg">
+					<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Extract
+					</button>
+					<button disabled onclick="resetUrl()" id="buttonReset" type="button" class="btn btn-warning btn-lg">
+					<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Reset
+					</button>
+					<button onclick="loadImage()" id="buttonLoad" type="button" class="btn btn-default btn-lg">
+					<span class="glyphicon glyphicon-save" aria-hidden="true"></span> Load
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+{% endblock %}

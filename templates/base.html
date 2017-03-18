@@ -5,26 +5,66 @@
 		<script src="{{ url_for( 'static', filename='js/jquery-3.1.1.min.js' ) }}"></script>
 		<!-- http://getbootstrap.com/ -->
 		<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-		<!-- https://pixlcore.com/read/WebcamJS -->
-		<script src="{{ url_for('static', filename='js/webcam.min.js') }}"></script>
-		<!-- https://responsivevoice.org/ -->
-		<script src="{{ url_for('static', filename='js/responsivevoice.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 		<!-- CUSTOM-FAVICON -->
 		<link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
 		<!-- CUSTOM-STYLESHEET -->
 		<link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/custom-styles.css') }}">
 		<!-- CUSTOM-SCRIPT -->
 		<script src="{{ url_for( 'static', filename='js/custom-scripts.js' ) }}"></script>
-		<title>WebCamOCR</title>
+		<title>image2text : {{title}}</title>
 	</head>
 	<body>
-		<div class="container">
-			<header>
-				<div class="jumbotron">
-					<img class="img-responsive center-block" src="{{ url_for( 'static', filename='img/logo.png' ) }}" alt="logo-image">
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-group" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="{{ url_for('showHome') }}">image2text</a>
 				</div>
-			</header>
-			{% block content %}{% endblock %}
-		</div>
-	</body>
-</html>
+				<div class="collapse navbar-collapse" id="navbar-collapse-group">
+					<ul class="nav navbar-nav">
+							{% if title=='home' %}
+							<li id="linkHome" class="active">
+							{% else %}
+							<li id="linkHome">
+							{% endif %}
+								<a href="{{ url_for('showHome') }}"><span class="glyphicon glyphicon-home"></span>&nbsp;home</a>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-picture"></span>&nbsp;source&nbsp;<span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li id="linkImageUpload"><a href="{{ url_for('showImageSource00') }}"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;image-upload</a></li>
+									<li id="linkWebCapture"><a href="{{ url_for('showImageSource01') }}"><span class="glyphicon glyphicon-camera"></span>&nbsp;&nbsp;webcam-capture</a></li>
+									<li id="linkImageUrl"><a href="{{ url_for('showImageSource02') }}"><span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;image-url</a></li>
+								</ul>
+							</li>
+								{% if title=='translate' %}
+								<li id="linkTranslate" class="active">
+								{% else %}
+								<li id="linkTranslate">
+								{% endif %}
+									<a href="{{ url_for('showTranslate') }}"><span class="glyphicon glyphicon-cog"></span>&nbsp;translate</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+				<div class="container">
+					{% block content %}{% endblock %}
+				</div>
+				<footer class="footer">
+					<h4 class="text-center">
+					<a href="{{ url_for('showHome') }}">home</a> | 
+					<a href="{{ url_for('showSource') }}">source</a> | 
+					<a href="{{ url_for('showTranslate') }}">translate</a> | 
+					<a href="https://github.com/kaushalmeena1996/acm-amoc-project">github</a>
+					</h4>
+				</footer>
+			</div>
+		</body>
+	</html>

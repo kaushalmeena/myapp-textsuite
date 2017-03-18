@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+	<!-- https://pixlcore.com/read/WebcamJS -->
+	<script src="{{ url_for('static', filename='js/webcam.min.js') }}"></script>
+	<ol class="breadcrumb">
+		<li><a href="{{ url_for('showSource') }}">source</a></li>
+		<li><a href="#">webcam-capture</a></li>
+	</ol>
+	<div class="thumbnail">
+		<div class="well">
+			<dl class="dl-horizontal font-size-medium">
+				<dt>step 2</dt>
+				<dd>capture image using your webcam</dd>
+			</dl>
+			<div hidden id="ocrImageDiv" class="well">
+				<img id="ocrImage" src="#" alt="ocr-image">
+			</div>
+			<div class="text-center">
+				<button onclick="openCamera()" id="buttonCamera" type="submit" class="btn btn-default btn-lg">
+				<span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+				</button>
+			</div>
+			<br>
+			<div hidden id="cameraDiv" class="well text-center">
+				<div id="ocrCamera" class="center-block"></div>
+				<br>
+				<div id="cameraButtonGroup" class="btn-group" role="group" aria-label="...">
+					<button onclick="takeSnapshot()" type="button" class="btn btn-primary btn-lg">
+					<span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span>
+					</button>
+					<button onclick="stopCamera()" type="button" class="btn btn-default btn-lg">
+					<span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+					</button>
+				</div>
+			</div>
+			<form class="form-inline" action="{{ url_for( 'showOCR' ) }}" method="post">
+				<input hidden id="imageContainer" type="text" name="imageContainer"></input>
+				<input hidden id="imageSource" type="text" name="imageSource" value="1"></input>
+				<div class="form-button-group">
+					<button disabled id="buttonExtract" type="submit" class="btn btn-success btn-lg">
+					<span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Extract
+					</button>
+					<button disabled onclick="resetImage()" id="buttonReset" type="button" class="btn btn-warning btn-lg">
+					<span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Reset
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+{% endblock %}
