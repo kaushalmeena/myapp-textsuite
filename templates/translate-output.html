@@ -7,27 +7,29 @@ $(document).ready(function() {
 });
 </script>
 <ol class="breadcrumb">
-    <li><a href="{{ url_for( 'showTranslation' ) }}">translate</a></li>
-    <li><a href="#">translation</a></li>
+    <li><a href="{{ url_for('showHome00') }}">home</a></li>
+    <li><a href="{{ url_for('showHome02') }}">translate</a></li>
+    <li><a href="{{ url_for('showTranslateInput') }}">input</a></li>
+    <li><a href="#">output</a></li>
 </ol>
 <div class="thumbnail">
     <div class="well">
         <span class="dl-horizontal font-size-medium">
-				<dt>step 2</dt>
-				<dd>check out text translation results</dd>
-			</span>
+                <dt>step 2</dt>
+                <dd>check out text translation output</dd>
+            </span>
         <br>
         <div class="form-group">
-            <textarea id="translateText" class="form-control" rows="5">{{translateText}}</textarea>
+            <textarea id="inputText" class="form-control" rows="5">{{inputText}}</textarea>
         </div>
         <br>
         <div class="form-group">
-            <textarea id="resultantText" class="form-control" rows="5">{{translationResult}}</textarea>
+            <textarea id="resultantText" class="form-control" rows="5">{{outputText}}</textarea>
             <input hidden id="toLanguage" value="{{toLanguage}}"></input>
         </div>
         <div class="input-group">
             <span class="input-group-btn">
-    				<button onclick="talkText()" id="talkButton" type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>&zwnj;
+                    <button onclick="talkText()" id="talkButton" type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>&zwnj;
             </button>
             </span>
             <select id="talkVoice" class="form-control">
@@ -99,6 +101,9 @@ $(document).ready(function() {
         </div>
         <br>
         <div class="form-button-group">
+            <button onclick="sendTo('#resultantText','/query/input')" id="buttonQuery" type="button" class="btn btn-success btn-lg">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Query
+            </button>
             <button onclick="copyText()" id="copyButton" type="button" class="btn btn-warning btn-lg">
                 <span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Copy
             </button>

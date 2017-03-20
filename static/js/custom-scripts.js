@@ -1,20 +1,11 @@
-$(document).ready(function() {
-    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
-        $('#buttonCamera').hide();
-        $('#linkWebCapture').hide();
-    }
-});
-
-
 function readImage(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function(e) {
             $('#ocrImage').attr('src', e.target.result)
-            $('#buttonExtract').prop('disabled', false);
-            $('#buttonReset').prop('disabled', false);
             $('#imageContainer').val(e.target.result);
-            $('#ocrImageDiv').show();
+            $('#alertText').hide();
+            $('#imageDiv').show();
         };
         reader.readAsDataURL(input.files[0]);
     }
@@ -27,44 +18,39 @@ function openImage() {
 function loadImage() {
     var imageUrl = $('#imageUrl').val()
     $('#ocrImage').attr('src', imageUrl);
-    $('#buttonExtract').prop('disabled', false);
-    $('#buttonReset').prop('disabled', false);
     $('#buttonLoad').prop('disabled', true);
     $('#imageContainer').val(imageUrl);
-    $('#ocrImageDiv').show();
+    $('#imageDiv').show();
 }
 
 function resetImage() {
-    $('#ocrImageDiv').hide();
-    $('#buttonExtract').prop('disabled', true);
-    $('#buttonReset').prop('disabled', true);
+    $('#imageDiv').hide();
     $("#imageUpload").val("");
+    $("#imageContainer").val("");
 }
 
 function resetUrl() {
-    $('#ocrImageDiv').hide();
-    $('#buttonExtract').prop('disabled', true);
-    $('#buttonReset').prop('disabled', true);
     $('#buttonLoad').prop('disabled', false);
+    $('#imageDiv').hide();
     $('#imageUrl').val("");
+    $("#imageContainer").val("");
 }
 
 function resetText() {
-    $("#translateText").val("");
-    $('#buttonTranslate').prop('disabled', true);
-    $('#buttonReset').prop('disabled', true);
+    $("#inputText").val("");
+    $('#alertText').hide();
     $('#fromLanguage').val("detect");
-    $('#toLanguage').val("af");
+    $('#toLanguage').val("en");
 }
 
-function detectText() {
-    var translateText = $("#translateText").val();
-    if (translateText.length) {
-        $('#buttonTranslate').prop('disabled', false);
-        $('#buttonReset').prop('disabled', false);
+function checkSubmit(elementID)
+{
+    var element = $(elementID).val();
+    if (element.length) {
+        return true;
     } else {
-        $('#buttonTranslate').prop('disabled', true);
-        $('#buttonReset').prop('disabled', true);
+        $('#alertText').show();
+        return false;
     }
 }
 
@@ -78,10 +64,9 @@ function takeSnapshot() {
     Webcam.snap(function(data_uri) {
         $('#ocrImage').attr('src', data_uri)
         $('#buttonCamera').hide();
-        $('#buttonExtract').prop('disabled', false);
-        $('#buttonReset').prop('disabled', false);
         $('#imageContainer').val(data_uri);
-        $('#ocrImageDiv').show();
+        $('#alertText').hide();
+        $('#imageDiv').show();
     });
 }
 
@@ -159,3 +144,43 @@ function setVoice()
     }
     $('#talkVoice').val(voice);
 }
+
+function hideAlert()
+{
+    $('#alertText').hide();    
+}
+
+function sendTo(elementID, toLocation) 
+{
+    var value = $(elementID).val();
+    var form = $('<form></form>');
+    form.attr("method", "post");
+    form.attr("action", toLocation);
+
+    var field = $('<input></input>');
+    field.attr("type", "hidden");
+    field.attr("name", 'inputText');
+    field.attr("value", value);
+
+    form.append(field);
+        
+    $(form).appendTo('body').submit();
+}
+
+function checkQuery(elementID)
+{
+    var element = $(elementID).val();
+    if (element.length) {
+        var width = $("#inputGroup").width();
+
+        width = width - 40;
+
+        $("#inputWidth").val(width);
+        return true;
+    } else {
+        $('#alertText').show();
+        return false;
+    }
+}
+
+

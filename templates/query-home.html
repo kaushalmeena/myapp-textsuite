@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+	</script>
+	<ol class="breadcrumb">
+		<li><a href="{{ url_for('showHome00') }}">home</a></li>
+		<li><a href="#">query</a></li>
+	</ol>
+	<div class="thumbnail">
+		<div class="jumbotron">
+			<h1>query</h1>
+			<p>query text to calculate or know anything.</p>
+			<p><a class="btn btn-primary btn-lg" href="{{ url_for('showQueryInput') }}" role="button">continue&nbsp;<span class="glyphicon glyphicon-chevron-right"></span></a></p>
+		</div>
+	</div>
+{% endblock %}

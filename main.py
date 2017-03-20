@@ -12,13 +12,15 @@ from google.cloud import translate, vision
 
 import json
 import os
+import re
 import requests
 import urllib
+import base64
 
 app = Flask(__name__)
 Compress(app)
 
-APPLICATION_NAME = "WebCamOCR"
+APPLICATION_NAME = "TextSuite"
 
 port = int(os.environ.get('PORT', 5000))
 
@@ -26,72 +28,95 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "secret/service_account.json"
 
 # Show Home page
 @app.route('/')
-def showHome():
+def showHome00():
     """Handler for Home page which displays extracted text."""
-    return render_template('home.html',
-                           title='home')
+    return render_template('main-home.html',
+                           title='main-home')
+
+# Show Home page
+@app.route('/extract')
+def showHome01():
+    """Handler for Home page which displays extracted text."""
+    return render_template('extract-home.html',
+                           title='extract-home')
+
+# Show Home page
+@app.route('/translate')
+def showHome02():
+    """Handler for Home page which displays extracted text."""
+    return render_template('translate-home.html',
+                           title='translate-home')
+
+# Show Home page
+@app.route('/query')
+def showHome03():
+    """Handler for Home page which displays extracted text."""
+    return render_template('query-home.html',
+                           title='query-home')
+
 
 # Show Source page
 
 
-@app.route('/source')
+@app.route('/extract/source')
 def showSource():
     """Handler for Source page which displays extracted text."""
-    return render_template('source.html',
-                           title='source')
+
+    browser = request.user_agent.browser
+    version = request.user_agent.version and int(request.user_agent.version.split('.')[0])
+    platform = request.user_agent.platform
+    string = request.user_agent.string
+    mobileDevice=0;
+
+    if browser and version:
+     if (browser == 'msie' and version < 9) \
+      or (browser == 'firefox' and version < 4) \
+      or (platform == 'android' and browser == 'safari' and version < 534) \
+      or (platform == 'iphone' and browser == 'safari' and version < 7000) \
+      or ((platform == 'macos' or platform == 'windows') and browser == 'safari' and not re.search('Mobile', string) and version < 534) \
+      or (re.search('iPad', string) and browser == 'safari' and version < 7000) \
+      or (platform == 'windows' and re.search('Windows Phone OS', string)) \
+      or (browser == 'opera') \
+      or (re.search('BlackBerry', string)):
+        mobileDevice=1;
+
+    return render_template('extract-source.html',
+                            mobileDevice=mobileDevice,
+                            title='extract-source')
 
 # Show ImageSource-1 page
 
 
-@app.route('/source/00')
+@app.route('/extract/source/image-upload')
 def showImageSource00():
     """Handler for Source page which displays extracted text."""
-    return render_template('imagescr00.html',
+    return render_template('extract-source-image-upload.html',
                            title='image-upload')
 
 # Show ImageSource-2 page
 
 
-@app.route('/source/01')
+@app.route('/extract/source/webcam-capture')
 def showImageSource01():
     """Handler for Source page which displays extracted text."""
-    return render_template('imagescr01.html',
+    return render_template('extract-source-webcam-capture.html',
                            title='webcam-capture')
 
 # Show ImageSource-3 page
 
 
-@app.route('/source/02')
+@app.route('/extract/source/image-url')
 def showImageSource02():
     """Handler for Source page which displays extracted text."""
-    return render_template('imagescr02.html',
+    return render_template('extract-source-image-url.html',
                            title='image-url')
 
-# Show ImageSource-3 page
-
-
-@app.route('/t')
-def showT():
-    """Handler for Source page which displays extracted text."""
-
-    return render_template('translation.html',
-                           imageSource='0',
-                           title='result')
-
-
-@app.route('/r')
-def showR():
-    """Handler for Source page which displays extracted text."""
-
-    return render_template('ocr.html',
-                           imageSource='0',
-                           title='result')
 
 # Show Result page
 
 
-@app.route('/image/ocr', methods=['POST'])
-def showOCR():
+@app.route('/extract/result', methods=['POST'])
+def showExtractResult():
     """Handler for Result page which displays extracted text."""
     if 'imageUpload' in request.files or 'imageContainer' in request.form:
         client = vision.Client()
@@ -111,61 +136,134 @@ def showOCR():
             ocrResult = 'ERROR while fetching ocr results.'
             toLanguage = 'en'
 
-        return render_template('ocr.html',
+        return render_template('extract-result.html',
                                ocrResult=ocrResult,
                                imageContainer=request.form['imageContainer'],
                                imageSource=request.form['imageSource'],
                                toLanguage=toLanguage,
-                               title='ocr')
+                               title='extract-result')
     else:
-        return render_template('ocr.html',
+        return render_template('extract-result.html',
                                ocrResult='ERROR 400 : Bad Request',
-                               title='ocr')
+                               title='extract-result')
 
 # Show ImageSource-3 page
 
 
-@app.route('/translate', methods=['GET', 'POST'])
-def showTranslate():
+@app.route('/translate/input', methods=['GET', 'POST'])
+def showTranslateInput():
     """Handler for Source page which displays extracted text."""
     if request.method == 'POST':
-        return render_template('translate.html',
-                               translateText=request.form['ocrResult'],
-                               title='translate')
+        return render_template('translate-input.html',
+                               inputText=request.form['inputText'],
+                               title='translate-input')
     else:
-        return render_template('translate.html',
-                               title='translate')
+        return render_template('translate-input.html',
+                               title='translate-input')
 
 
 # Show Result page
-@app.route('/text/translation', methods=['POST'])
-def showTranslation():
+@app.route('/translate/output', methods=['POST'])
+def showTranslateOutput():
     """Handler for Result page which displays extracted text."""
-    if 'translateText' in request.form and 'toLanguage' in request.form:
+    if 'inputText' in request.form and 'toLanguage' in request.form:
         client = translate.Client() 
 
         if request.form['fromLanguage'] == 'detect':
-            response_translate = client.translate(values=request.form['translateText'],
+            response_translate = client.translate(values=request.form['inputText'],
                                         target_language=request.form['toLanguage'])
         else:
-            response_translate = client.translate(values=request.form['translateText'],
+            response_translate = client.translate(values=request.form['inputText'],
                                         source_language=request.form['fromLanguage'],
                                         target_language=request.form['toLanguage'])
 
         if 'translatedText' in response_translate:    
-            translationResult = response_translate['translatedText']          
+            outputText = response_translate['translatedText']          
         else:
-            translationResult = 'ERROR while fetching translation results.'
+            outputText = 'ERROR while fetching translation results.'
 
-        return render_template('translation.html',
-                               translateText=request.form['translateText'],
-                               translationResult=translationResult,
+        return render_template('translate-output.html',
+                               inputText=request.form['inputText'],
+                               outputText=outputText,
                                toLanguage=request.form['toLanguage'],
-                               title='translation')
+                               title='translate-output')
     else:
-        return render_template('translation.html',
-                               translationResult='ERROR 400 : Bad Request',
-                               title='translation')
+        return render_template('translate-output.html',
+                               outputText='ERROR 400 : Bad Request',
+                               title='translate-output')
+
+
+
+@app.route('/query/input', methods=['GET', 'POST'])
+def showQueryInput():
+    """Handler for Source page which displays extracted text."""
+    if request.method == 'POST':
+        return render_template('query-input.html',
+                               inputText=request.form['inputText'],
+                               title='translate-input')
+    else:
+        return render_template('query-input.html',
+                               title='translate-input')
+
+@app.route('/query/output', methods=['POST'])
+def showQueryOutput():
+    """Handler for Source page which displays extracted text."""
+    if 'inputText' in request.form and 'inputWidth' in request.form:
+        appID = json.loads(open('secret/wolframalpha_secret.json', 'r').read())['wolframalpha']['app_id']
+        
+        queryUrl = 'http://api.wolframalpha.com/v1/simple'
+        queryDat = {'appid': appID, 
+                    'i': request.form['inputText'],
+                    'width': request.form['inputWidth'],
+                    'units': 'metric'}
+
+        imageDat = requests.get(queryUrl, queryDat)
+
+        if imageDat.status_code == 200:
+            base64Dat = str(base64.b64encode(imageDat.content).decode("utf-8"))
+            imageContainer = "data:image/gif;base64," + base64Dat
+
+            return render_template('query-output.html',
+                               inputText=request.form['inputText'],
+                               imageContainer=imageContainer,
+                               title='query-output')
+        else:
+            queryError = 1
+            errorHeader = "ERROR"
+            errorContent = imageDat.content
+
+            return render_template('query-output.html',
+                                    inputText=request.form['inputText'],
+                                    queryError=queryError,
+                                    errorHeader=errorHeader,
+                                    errorContent=errorContent,
+                                    title='query-output')
+    else:
+        return render_template('query-output.html',
+                               queryError=1,
+                               errorHeader='ERROR 400',
+                               errorContent='input text was not sent correctly',
+                               title='query-output')
+
+
+@app.route('/x')
+def x():
+    """Handler for Source page which displays extracted text."""
+    
+    return render_template('extract-result.html',
+                           title=text)
+
+@app.route('/t')
+def t():
+    """Handler for Source page which displays extracted text."""
+    return render_template('translate-output.html',
+                           title='translate-output')
+
+@app.route('/q')
+def q():
+    """Handler for Source page which displays extracted text."""
+    return render_template('query-output.html',
+                           title='query-output')
 
 
 if __name__ == '__main__':

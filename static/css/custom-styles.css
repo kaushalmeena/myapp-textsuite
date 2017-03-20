@@ -20,7 +20,7 @@ button {
     max-height: 300px;
 }
 
-#ocrImageDiv {
+#imageDiv {
     text-align: center;
 }
 
@@ -35,5 +35,4 @@ button {
 
 #talkDiv {
     width: 280px;
-    
 }

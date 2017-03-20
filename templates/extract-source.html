@@ -6,6 +6,8 @@
 		}
 	</style>
 	<ol class="breadcrumb">
+	    <li><a href="{{ url_for('showHome00') }}">home</a></li>
+	    <li><a href="{{ url_for('showHome01') }}">extract</a></li>
 		<li><a href="#">source</a></li>
 	</ol>
 	<div class="thumbnail">
@@ -16,7 +18,9 @@
 			</dl>
 			<div class="button-group center-block">
 				<a class="btn btn-primary btn-lg btn-block" href="{{ url_for('showImageSource00') }}" role="button"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;image-upload</a>
+				{% if mobileDevice == 0 %}
 				<a class="btn btn-warning btn-lg btn-block" href="{{ url_for('showImageSource01') }}" role="button"><span class="glyphicon glyphicon-camera"></span>&nbsp;&nbsp;webcam-capture</a>
+				{% endif %}
 				<a class="btn btn-success btn-lg btn-block" href="{{ url_for('showImageSource02') }}" role="button"><span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;image-url</a>
 			</div>
 		</div>

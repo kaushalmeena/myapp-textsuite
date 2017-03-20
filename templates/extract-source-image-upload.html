@@ -1,5 +1,7 @@
 {% extends "base.html" %} {% block content %}
 <ol class="breadcrumb">
+    <li><a href="{{ url_for('showHome00') }}">home</a></li>
+    <li><a href="{{ url_for('showHome01') }}">extract</a></li>
     <li><a href="{{ url_for('showSource') }}">source</a></li>
     <li><a href="#">image-upload</a></li>
 </ol>
@@ -9,10 +11,14 @@
             <dt>step 2</dt>
             <dd>browse image from your computer</dd>
         </dl>
-        <div hidden id="ocrImageDiv" class="well">
+        <div hidden id="imageDiv" class="well">
             <img id="ocrImage" src="#" alt="ocr-image">
         </div>
-        <form class="form" action="{{ url_for( 'showOCR' ) }}" method="post" enctype=multipart/form-data>
+        <div hidden id="alertText" class="alert alert-danger">
+            <button type="button" class="close" onclick="hideAlert()"><span aria-hidden="true">&times;</span></button>
+            <strong>ERROR :</strong> no image has been chosen.
+        </div>
+        <form class="form" onsubmit="return checkSubmit('#imageContainer')" action="{{ url_for( 'showExtractResult' ) }}" method="post" enctype=multipart/form-data>
             <div class="input-group">
                 <span class="input-group-btn">
     				<button onclick="openImage()" type="button" class="btn btn-default"><span class="glyphicon glyphicon-folder-open font-size-small"></span>&zwnj;
@@ -24,10 +30,10 @@
             <input hidden id="imageContainer" type="text" name="imageContainer"></input>
             <input hidden id="imageSource" type="text" name="imageSource" value="0"></input>
             <div class="form-button-group">
-                <button disabled id="buttonExtract" type="submit" class="btn btn-success btn-lg">
+                <button id="buttonExtract" type="submit" class="btn btn-success btn-lg">
                     <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Extract
                 </button>
-                <button disabled onclick="resetImage()" id="buttonReset" type="button" class="btn btn-warning btn-lg">
+                <button onclick="resetImage()" id="buttonReset" type="button" class="btn btn-warning btn-lg">
                     <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Reset
                 </button>
             </div>

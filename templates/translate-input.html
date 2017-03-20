@@ -1,22 +1,23 @@
 {% extends "base.html" %} {% block content %}
-<script>
-$(document).ready(function() {
-    detectText();
-});
-</script>
 <ol class="breadcrumb">
-    <li><a href="#">translate</a></li>
+    <li><a href="{{ url_for('showHome00') }}">home</a></li>
+    <li><a href="{{ url_for('showHome02') }}">translate</a></li>
+    <li><a href="#">input</a></li>
 </ol>
 <div class="thumbnail">
     <div class="well">
         <span class="dl-horizontal font-size-medium">
-				<dt>step 1</dt>
-				<dd>enter text for translation</dd>
-			</span>
+                <dt>step 1</dt>
+                <dd>enter text for translation</dd>
+            </span>
         <br>
-        <form class="form" action="{{ url_for( 'showTranslation' ) }}" method="post">
+        <div hidden id="alertText" class="alert alert-danger">
+            <button type="button" class="close" onclick="hideAlert()"><span aria-hidden="true">&times;</span></button>
+            <strong>ERROR :</strong> no input text detected.
+        </div>
+        <form class="form" onsubmit="return checkSubmit('#inputText')" action="{{ url_for( 'showTranslateOutput' ) }}" method="post">
             <div class="form-group">
-                <textarea onkeyup="detectText()" id="translateText" name="translateText" class="form-control" rows="5">{{translateText}}</textarea>
+                <textarea id="inputText" name="inputText" class="form-control" rows="5">{{inputText}}</textarea>
             </div>
             <div class="row">
                 <div class="form-group col-md-6">
@@ -130,7 +131,7 @@ $(document).ready(function() {
                 </div>
                 <div class="form-group col-md-6">
                     <select class="form-control" id="toLanguage" name="toLanguage">
-                         <option value="af">Afrikaans</option>
+                        <option value="af">Afrikaans</option>
                         <option value="sq">Albanian</option>
                         <option value="am">Amharic</option>
                         <option value="ar">Arabic</option>
@@ -241,7 +242,10 @@ $(document).ready(function() {
                 <button id="buttonTranslate" type="submit" class="btn btn-success btn-lg">
                     <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Translate
                 </button>
-                <button onclick="resetText()" id="buttonReset" type="button" class="btn btn-warning btn-lg">
+                <button onclick="sendTo('#inputText','/query/input')" id="buttonQuery" type="button" class="btn btn-warning btn-lg">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Query
+                </button>
+                <button onclick="resetText()" id="buttonReset" type="button" class="btn btn-default btn-lg">
                     <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Reset
                 </button>
             </div>
