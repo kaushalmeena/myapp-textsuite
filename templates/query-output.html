@@ -30,9 +30,11 @@
             <img id="queryImage" src="{{imageContainer}}" alt="ocr-image">
         </div>
         <div class="form-button-group">
+            {% if mobileDevice == false %}
             <a href="{{imageContainer}}" download="queryimage.gif"><button id="saveButton" type="button" class="btn btn-success btn-lg">
                 <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save
             </button></a>
+            {% endif %}
             <button onclick="sendTo('#inputText','/translate/input')" id="buttonTranslate" type="button" class="btn btn-warning btn-lg">
                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Translate
             </button>

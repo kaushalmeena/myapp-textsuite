@@ -3,12 +3,12 @@
 ### [ Synopsis ]
 A web app which uses various api to achieve text extraction, text translation and text querying.
 
-#### API USED:
+#### API USED IN PROJECT:
 - text extraction  : Google Cloud Vision API (TEXT DETECTION)
 - text translation : Google Cloud Translation API
 - text querying    : Wolfram Alpha Simple API
 
-- For live version visit page: https://myapp-textsuite.herokuapp.com/
+For live version visit page: https://myapp-textsuite.herokuapp.com/
 
 ### [Prerequisities]
 - Google Cloud Service Account 

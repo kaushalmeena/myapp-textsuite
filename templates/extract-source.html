@@ -18,7 +18,7 @@
 			</dl>
 			<div class="button-group center-block">
 				<a class="btn btn-primary btn-lg btn-block" href="{{ url_for('showImageSource00') }}" role="button"><span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;image-upload</a>
-				{% if mobileDevice == 0 %}
+				{% if mobileDevice == false %}
 				<a class="btn btn-warning btn-lg btn-block" href="{{ url_for('showImageSource01') }}" role="button"><span class="glyphicon glyphicon-camera"></span>&nbsp;&nbsp;webcam-capture</a>
 				{% endif %}
 				<a class="btn btn-success btn-lg btn-block" href="{{ url_for('showImageSource02') }}" role="button"><span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;image-url</a>

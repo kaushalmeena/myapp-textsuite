@@ -2,7 +2,7 @@
     .form-button-group {
         width: 100%;
     }
-    .form-button-group button {
+    .form-button-group button, .form-button-group a {
         margin-top: 5px;
         width: 100%;
     }
