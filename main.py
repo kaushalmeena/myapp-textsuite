@@ -149,7 +149,7 @@ def showExtractResult():
             }
 
         extractResponse = requests.post("%s?key=%s" % (extractUrl, apiKey), json.dumps(
-            extractDat), headers={'content-type': 'application/json'})
+            extractDat), headers={'content-type': 'application/json', 'Referer': 'https://myapp-textsuite.herokuapp.com/'})
 
         if extractResponse.status_code == 200:
             extractResponse = extractResponse.json()
@@ -210,7 +210,7 @@ def showTranslateOutput():
                             'target': request.form['toLanguage'],
                             'source': request.form['fromLanguage']}
 
-        translateResponse = requests.get(translateUrl, translateDat)
+        translateResponse = requests.get(translateUrl, translateDat, headers={'Referer': 'https://myapp-textsuite.herokuapp.com/'})
 
         if translateResponse.status_code == 200:
             translateResponse = translateResponse.json()
