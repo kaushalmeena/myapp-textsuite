@@ -8,8 +8,6 @@ from flask_compress import Compress
 
 from secret.secret import get_secret
 
-from google.cloud import translate, vision
-
 from user_agents import parse
 
 import json
@@ -26,8 +24,6 @@ Compress(app)
 APPLICATION_NAME = "TextSuite"
 
 port = int(os.environ.get('PORT', 5000))
-
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "secret/service_account.json"
 
 # Show Main Home page
 
