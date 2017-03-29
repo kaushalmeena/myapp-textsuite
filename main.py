@@ -19,6 +19,7 @@ import requests
 import urllib
 import base64
 
+
 app = Flask(__name__)
 Compress(app)
 
@@ -112,25 +113,56 @@ def showImageSource02():
 @app.route('/extract/result', methods=['POST'])
 def showExtractResult():
     """Handler for ExtractResult page which displays results for text extraction."""
-    if 'imageUpload' in request.files or 'imageContainer' in request.form:
-        client = vision.Client()
+    if 'imageContainer' in request.form:
+        apiKey = json.loads(
+            open('secret/googlecloud_secret.json', 'r').read())['googlecloud']['api_key']
 
-        if request.form['imageSource'] == '1':
-            imageDat = request.form['imageContainer'].split(',')[1]
-            image = client.image(content=imageDat)
-        if request.form['imageSource'] == '2':
-            image = client.image(content=urllib.urlopen(
-                request.form['imageContainer']).read())
+        extractUrl = "https://vision.googleapis.com/v1/images:annotate"
+
+        if request.form['imageSource'] == '0' or request.form['imageSource'] == '1':
+            extractDat = {
+                "requests": [
+                    {
+                        "image": {
+                            "content": request.form['imageContainer'].split(',')[1]
+                        },
+                        "features": [
+                            {
+                                "type": "TEXT_DETECTION",
+                                "maxResults": 1
+                            }
+                        ]
+                    }
+                ]
+            }
         else:
-            image = client.image(content=request.files['imageUpload'].read())
+            extractDat = {
+                "requests": [
+                    {
+                        "image": {
+                            "content": base64.b64encode(urllib.urlopen(request.form['imageContainer']).read())
+                        },
+                        "features": [
+                            {
+                                "type": "TEXT_DETECTION",
+                                "maxResults": 1
+                            }
+                        ]
+                    }
+                ]
+            }
 
-        textList = image.detect_text()
+        extractResponse = requests.post("%s?key=%s" % (extractUrl, apiKey), json.dumps(
+            extractDat), headers={'content-type': 'application/json'})
 
-        if len(textList):
-            ocrResult += textList[0].description
-            toLanguage = textList[0].locale
+        if extractResponse.status_code == 200:
+            extractResponse = extractResponse.json()
+            ocrResult = extractResponse['responses'][
+                0]['textAnnotations'][0]['description']
+            toLanguage = extractResponse['responses'][
+                0]['textAnnotations'][0]['locale']
         else:
-            ocrResult = 'ERROR while fetching ocr results.'
+            ocrResult = extractOcr.text
             toLanguage = 'en'
 
         return render_template('extract-result.html',
@@ -165,21 +197,31 @@ def showTranslateInput():
 def showTranslateOutput():
     """Handler for TranslateOutput page which displays results for text translation."""
     if 'inputText' in request.form and 'toLanguage' in request.form:
-        client = translate.Client()
+        apiKey = json.loads(
+            open('secret/googlecloud_secret.json', 'r').read())['googlecloud']['api_key']
+
+        translateUrl = "https://www.googleapis.com/language/translate/v2"
 
         if request.form['fromLanguage'] == 'detect':
-            response_translate = client.translate(values=request.form['inputText'],
-                                                  target_language=request.form['toLanguage'])
+            translateDat = {'key': apiKey,
+                            'q': request.form['inputText'],
+                            'format': 'text',
+                            'target': request.form['toLanguage']}
         else:
-            response_translate = client.translate(values=request.form['inputText'],
-                                                  source_language=request.form[
-                                                      'fromLanguage'],
-                                                  target_language=request.form['toLanguage'])
+            translateDat = {'key': apiKey,
+                            'q': request.form['inputText'],
+                            'format': 'text',
+                            'target': request.form['toLanguage'],
+                            'source': request.form['fromLanguage']}
 
-        if 'translatedText' in response_translate:
-            outputText = response_translate['translatedText']
+        translateResponse = requests.get(translateUrl, translateDat)
+
+        if translateResponse.status_code == 200:
+            translateResponse = translateResponse.json()
+            outputText = translateResponse['data'][
+                'translations'][0]['translatedText']
         else:
-            outputText = 'ERROR while fetching translation results.'
+            outputText = translateResponse.text
 
         return render_template('translate-output.html',
                                inputText=request.form['inputText'],
@@ -224,10 +266,11 @@ def showQueryOutput():
                     'width': request.form['inputWidth'],
                     'units': 'metric'}
 
-        imageDat = requests.get(queryUrl, queryDat)
+        queryResponse = requests.get(queryUrl, queryDat)
 
-        if imageDat.status_code == 200:
-            base64Dat = str(base64.b64encode(imageDat.content).decode("utf-8"))
+        if queryResponse.status_code == 200:
+            base64Dat = str(base64.b64encode(
+                queryResponse.content).decode("utf-8"))
             imageContainer = "data:image/gif;base64," + base64Dat
 
             return render_template('query-output.html',

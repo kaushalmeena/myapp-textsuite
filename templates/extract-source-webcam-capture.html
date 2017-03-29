@@ -39,7 +39,7 @@
             	<button type="button" class="close" onclick="hideAlert()"><span aria-hidden="true">&times;</span></button>
             	<strong>ERROR :</strong> no image has been captured.
         	</div>
-			<form class="form-inline" onsubmit="return checkSubmit('#imageContainer')" action="{{ url_for( 'showExtractResult' ) }}" method="post">
+			<form class="form" onsubmit="return checkSubmit('#imageContainer')" action="{{ url_for( 'showExtractResult' ) }}" method="post" enctype=multipart/form-data>
 				<input hidden id="imageContainer" type="text" name="imageContainer"></input>
 				<input hidden id="imageSource" type="text" name="imageSource" value="1"></input>
 				<div class="form-button-group">

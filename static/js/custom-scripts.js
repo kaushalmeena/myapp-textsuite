@@ -172,9 +172,7 @@ function checkQuery(elementID)
     var element = $(elementID).val();
     if (element.length) {
         var width = $("#inputGroup").width();
-
         width = width - 40;
-
         $("#inputWidth").val(width);
         return true;
     } else {

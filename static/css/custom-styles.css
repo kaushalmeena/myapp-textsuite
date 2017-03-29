@@ -10,10 +10,15 @@
 
 body {
     padding-top: 70px;
+    background-image: url("/static/img/bgdesign.png");
 }
 
 button {
     width: 140px;
+}
+
+ol {
+    border: solid 1px #D7DBDD;
 }
 
 #ocrImage {
@@ -29,10 +34,12 @@ button {
     height: 480px;
 }
 
+#talkDiv {
+    width: 280px;
+}
+
 .font-size-medium {
     font-size: 26px;
 }
 
-#talkDiv {
-    width: 280px;
-}
+
