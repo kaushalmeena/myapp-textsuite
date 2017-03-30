@@ -1,3 +1,9 @@
+@media (min-width: 596px) {
+    .form-button-group a {
+         width: 140px;
+    }
+}
+
 @media (max-width: 595px) {
     .form-button-group {
         width: 100%;

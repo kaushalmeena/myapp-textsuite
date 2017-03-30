@@ -47,6 +47,8 @@ function checkSubmit(elementID)
 {
     var element = $(elementID).val();
     if (element.length) {
+        stopCamera();
+        $("#inputWidth").val($("#inputGroup").width() - 40);
         return true;
     } else {
         $('#alertText').show();
@@ -166,19 +168,3 @@ function sendTo(elementID, toLocation)
         
     $(form).appendTo('body').submit();
 }
-
-function checkQuery(elementID)
-{
-    var element = $(elementID).val();
-    if (element.length) {
-        var width = $("#inputGroup").width();
-        width = width - 40;
-        $("#inputWidth").val(width);
-        return true;
-    } else {
-        $('#alertText').show();
-        return false;
-    }
-}
-
-

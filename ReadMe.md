@@ -15,11 +15,12 @@ For live version visit page: https://myapp-textsuite.herokuapp.com/
      1. Go to the [Google API Console Credentials](https://console.cloud.google.com/apis/credentials). If prompted, select a project. If there is no project then create one.
      2. Click Create credentials, select API key
      3. Copy API key from dialog box and initialise the 'api_key' variable with your apiKey in googlecloud_secret.json file located in secret folder of main directory.
-     5. Enable Google Translate API and Google Vision API for your project.
+     4. In the dialog box click on restrict key, then in Key restriction select 'HTTP referrers (websites)'. Enter 'https://myapp-textsuite.herokuapp.com/' in textbox, then click save.
+     5. Enable [Google Translate API](https://console.cloud.google.com/apis/api/translate.googleapis.com/) and [Google Vision API](https://console.cloud.google.com/apis/api/vision.googleapis.com/) for your project.
 - Wolfram Alpha appID
 	 1. Signup for a Wolfram Alpha Application ID by visiting this [link](https://developer.wolframalpha.com/portal/signup.html). If already signedup then signin. 
 	 2. After signing in, on the My Apps tab. Click the 'Get an AppID' button and fill out the 'Get a New AppID' form. Use any Application name and description you like.
-	 3. Click the 'Get AppID' button. Copy the APPID string and click "OK".
+	 3. Click the 'Get AppID' button. Copy the APPID string and click 'OK'.
 	 4. Initialise the 'app_id' variable with your AppID in wolframalpha_secret.json file located in secret folder of main directory.
 ### [Usage]
 To start the app simply run

@@ -15,7 +15,7 @@
             <button type="button" class="close" onclick="hideAlert()"><span aria-hidden="true">&times;</span></button>
             <strong>ERROR :</strong> no input text detected.
         </div>
-        <form class="form" onsubmit="return checkQuery('#inputText')" action="{{ url_for( 'showQueryOutput' ) }}" method="post">
+        <form class="form" onsubmit="return checkSubmit('#inputText')" action="{{ url_for( 'showQueryOutput' ) }}" method="post">
             <div id="inputGroup" class="input-group">
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-th" aria-hidden="true"></span>&zwnj;

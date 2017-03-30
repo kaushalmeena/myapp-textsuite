@@ -276,18 +276,18 @@ def showQueryOutput():
                                    title='query-output')
         else:
             errorHeader = "ERROR"
-            errorContent = imageDat.content
+            errorContent = queryResponse.text
 
             return render_template('query-output.html',
                                    inputText=request.form['inputText'],
-                                   queryError=1,
+                                   queryError=True,
                                    errorHeader=errorHeader,
                                    errorContent=errorContent,
                                    mobileDevice=mobileDevice,
                                    title='query-output')
     else:
         return render_template('query-output.html',
-                               queryError=1,
+                               queryError=True,
                                errorHeader='ERROR 400',
                                errorContent='input text was not sent correctly',
                                mobileDevice=mobileDevice,
