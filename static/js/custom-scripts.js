@@ -97,9 +97,9 @@ function talkText() {
     });
 }
 
-function setVoice()
+function setVoice(elementID)
 {
-    var sourceLanguage = $('#toLanguage').val();
+    var sourceLanguage = $(elementID).val();
     var voice = 'UK English Female';
     switch (sourceLanguage)
     {

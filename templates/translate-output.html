@@ -3,7 +3,7 @@
 <script src="{{ url_for('static', filename='js/responsivevoice.min.js') }}"></script>
 <script>
 $(document).ready(function() {
-    setVoice();
+    setVoice('#toLanguage');
 });
 </script>
 <ol class="breadcrumb">
@@ -109,6 +109,5 @@ $(document).ready(function() {
             </button>
         </div>
     </div>
-</div>
 </div>
 {% endblock %}

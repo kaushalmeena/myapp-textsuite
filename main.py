@@ -162,7 +162,7 @@ def showExtractResult():
 
         if extractResponse.status_code != 200 or extractResponse.json().get('error'):
             ocrResult = extractResponse.text
-            toLanguage = 'en'
+            fromLanguage = 'en'
 
         else:
             extractResponse = extractResponse.json()
@@ -170,16 +170,16 @@ def showExtractResult():
                 0]['textAnnotations'][0]['description']
 
             if request.form['fromLanguage'] == 'detect':
-                toLanguage = extractResponse['responses'][0][
+                fromLanguage = extractResponse['responses'][0][
                     'textAnnotations'][0]['locale'].split('-')[0]
             else:
-                toLanguage = request.form['fromLanguage']
+                fromLanguage = request.form['fromLanguage']
 
         return render_template('extract-result.html',
                                ocrResult=ocrResult,
                                imageContainer=request.form['imageContainer'],
                                imageSource=request.form['imageSource'],
-                               toLanguage=toLanguage,
+                               fromLanguage=fromLanguage,
                                title='extract-result')
     else:
         return render_template('extract-result.html',
@@ -229,7 +229,7 @@ def showTranslateOutput():
 
         if translateResponse.status_code != 200 or translateResponse.json().get('error'):
             outputText = translateResponse.text
-            
+
         else:
             translateResponse = translateResponse.json()
             outputText = translateResponse['data'][

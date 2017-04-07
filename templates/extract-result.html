@@ -3,7 +3,7 @@
 <script src="{{ url_for('static', filename='js/responsivevoice.min.js') }}"></script>
 <script>
 $(document).ready(function() {
-    setVoice();
+    setVoice('#fromLanguage');
 });
 </script>
 <ol class="breadcrumb">
@@ -30,7 +30,7 @@ $(document).ready(function() {
         </div>
         <div class="form-group">
             <textarea id="resultantText" name="ocrResult" class="form-control" rows="5">{{ocrResult}}</textarea>
-            <input hidden id="toLanguage" value="{{toLanguage}}"></input>
+            <input hidden id="fromLanguage" value="{{fromLanguage}}"></input>
         </div>
         <div class="input-group">
             <span class="input-group-btn">
