@@ -27,6 +27,7 @@ function resetImage() {
     $('#imageDiv').hide();
     $("#imageUpload").val("");
     $("#imageContainer").val("");
+    $('#fromLanguage').val("detect");
 }
 
 function resetUrl() {
@@ -34,6 +35,7 @@ function resetUrl() {
     $('#imageDiv').hide();
     $('#imageUrl').val("");
     $("#imageContainer").val("");
+    $('#fromLanguage').val("detect");
 }
 
 function resetText() {
@@ -104,7 +106,7 @@ function setVoice()
         case 'en': voice = "UK English Female"; break;
         case 'ar': voice = "Arabic Female"; break;
         case 'hy': voice = "Armenian Male"; break;
-        case 'zh-CN': voice = "Chinese Female"; break;
+        case 'zh': voice = "Chinese Female"; break;
         case 'cs': voice = "Czech Female"; break;
         case 'da': voice = "Danish Female"; break;
         case 'de': voice = "Deutsch Female"; break;

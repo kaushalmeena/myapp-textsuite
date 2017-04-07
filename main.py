@@ -116,11 +116,17 @@ def showExtractResult():
         extractUrl = "https://vision.googleapis.com/v1/images:annotate"
 
         if request.form['imageSource'] == '0' or request.form['imageSource'] == '1':
+            imageContent = request.form['imageContainer'].split(',')[1]
+        else:
+            imageContent = base64.b64encode(urllib.urlopen(
+                request.form['imageContainer']).read())
+
+        if request.form['fromLanguage'] == 'detect':
             extractDat = {
                 "requests": [
                     {
                         "image": {
-                            "content": request.form['imageContainer'].split(',')[1]
+                            "content": imageContent
                         },
                         "features": [
                             {
@@ -136,14 +142,17 @@ def showExtractResult():
                 "requests": [
                     {
                         "image": {
-                            "content": base64.b64encode(urllib.urlopen(request.form['imageContainer']).read())
+                            "content": imageContent
                         },
                         "features": [
                             {
                                 "type": "TEXT_DETECTION",
                                 "maxResults": 1
                             }
-                        ]
+                        ],
+                        "imageContext": {
+                            "languageHints": request.form['fromLanguage']
+                        },
                     }
                 ]
             }
@@ -151,15 +160,20 @@ def showExtractResult():
         extractResponse = requests.post("%s?key=%s" % (extractUrl, apiKey), json.dumps(
             extractDat), headers={'content-type': 'application/json', 'Referer': 'https://myapp-textsuite.herokuapp.com/'})
 
-        if extractResponse.status_code == 200:
+        if extractResponse.status_code != 200 or extractResponse.json().get('error'):
+            ocrResult = extractResponse.text
+            toLanguage = 'en'
+
+        else:
             extractResponse = extractResponse.json()
             ocrResult = extractResponse['responses'][
                 0]['textAnnotations'][0]['description']
-            toLanguage = extractResponse['responses'][
-                0]['textAnnotations'][0]['locale']
-        else:
-            ocrResult = extractOcr.text
-            toLanguage = 'en'
+
+            if request.form['fromLanguage'] == 'detect':
+                toLanguage = extractResponse['responses'][0][
+                    'textAnnotations'][0]['locale'].split('-')[0]
+            else:
+                toLanguage = request.form['fromLanguage']
 
         return render_template('extract-result.html',
                                ocrResult=ocrResult,
@@ -210,14 +224,16 @@ def showTranslateOutput():
                             'target': request.form['toLanguage'],
                             'source': request.form['fromLanguage']}
 
-        translateResponse = requests.get(translateUrl, translateDat, headers={'Referer': 'https://myapp-textsuite.herokuapp.com/'})
+        translateResponse = requests.get(translateUrl, translateDat, headers={
+                                         'Referer': 'https://myapp-textsuite.herokuapp.com/'})
 
-        if translateResponse.status_code == 200:
+        if translateResponse.status_code != 200 or translateResponse.json().get('error'):
+            outputText = translateResponse.text
+            
+        else:
             translateResponse = translateResponse.json()
             outputText = translateResponse['data'][
                 'translations'][0]['translatedText']
-        else:
-            outputText = translateResponse.text
 
         return render_template('translate-output.html',
                                inputText=request.form['inputText'],
