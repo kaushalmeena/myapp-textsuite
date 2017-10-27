@@ -11,6 +11,20 @@ A web app which uses various api to achieve text extraction, text translation an
 For live version visit page: https://myapp-textsuite.herokuapp.com/
 
 ### [Prerequisities]
+- Python
+  - https://www.python.org/downloads/
+- Python Libraries
+  - Flask==0.9
+    - http://flask.pocoo.org/docs/0.11/installation/
+  - oauth2client==3.0.0
+    - https://oauth2client.readthedocs.io/en/latest/
+  - httplib2==0.9.2
+    - https://pypi.python.org/pypi/httplib2
+  - SQLAlchemy==1.0.15
+    - http://www.sqlalchemy.org/download.html
+  - requests==2.11.1
+    - http://docs.python-requests.org/en/master/user/install/
+
 - Google Cloud apiKey 
      1. Go to the [Google API Console Credentials](https://console.cloud.google.com/apis/credentials). If prompted, select a project. If there is no project then create one.
      2. Click Create credentials, select API key
