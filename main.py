@@ -10,6 +10,8 @@ from secret.secret import get_secret
 
 from user_agents import parse
 
+from googletrans import Translator
+
 import json
 import os
 import re
@@ -110,70 +112,44 @@ def showImageSource02():
 def showExtractResult():
     """Handler for ExtractResult page which displays results for text extraction."""
     if 'imageContainer' in request.form:
-        apiKey = json.loads(
-            open('secret/googlecloud_secret.json', 'r').read())['googlecloud']['api_key']
+        apiKey = json.loads(open('secret/ocrapi_secret.json',
+                                 'r').read())['ocrapi']['api_key']
 
-        extractUrl = "https://vision.googleapis.com/v1/images:annotate"
+        extractUrl = "https://api.ocr.space/parse/image"
 
         if request.form['imageSource'] == '0' or request.form['imageSource'] == '1':
-            imageContent = request.form['imageContainer'].split(',')[1]
+            imageContent = request.form['imageContainer']
         else:
             imageContent = base64.b64encode(urllib.urlopen(
                 request.form['imageContainer']).read())
 
         if request.form['fromLanguage'] == 'detect':
-            extractDat = {
-                "requests": [
-                    {
-                        "image": {
-                            "content": imageContent
-                        },
-                        "features": [
-                            {
-                                "type": "TEXT_DETECTION",
-                                "maxResults": 1
-                            }
-                        ]
-                    }
-                ]
-            }
-        else:
-            extractDat = {
-                "requests": [
-                    {
-                        "image": {
-                            "content": imageContent
-                        },
-                        "features": [
-                            {
-                                "type": "TEXT_DETECTION",
-                                "maxResults": 1
-                            }
-                        ],
-                        "imageContext": {
-                            "languageHints": request.form['fromLanguage']
-                        },
-                    }
-                ]
-            }
-
-        extractResponse = requests.post("%s?key=%s" % (extractUrl, apiKey), json.dumps(
-            extractDat), headers={'content-type': 'application/json', 'Referer': 'https://myapp-textsuite.herokuapp.com/'})
-
-        if extractResponse.status_code != 200 or extractResponse.json().get('error'):
-            ocrResult = extractResponse.text
             fromLanguage = 'en'
+            extractDat = {
+                "apiKey": apiKey,
+                "base64Image": imageContent
+            }
+
+        else:
+            fromLanguage = request.form['fromLanguage']
+            extractDat = {
+                "apiKey": apiKey,
+                "base64Image": imageContent,
+                "language": request.form['fromLanguage']
+            }
+
+        extractResponse = requests.post(extractUrl, extractDat, headers={
+                                        'User-Agent': 'Mozilla/5.0', 'Referer': 'https://myapp-textsuite.herokuapp.com/'})
+
+        if extractResponse.status_code == 200:
+            extractResponse = extractResponse.json()
+            ocrResult = ''
+            for response in extractResponse['ParsedResults']:
+                ocrResult += response['ParsedText']
 
         else:
             extractResponse = extractResponse.json()
-            ocrResult = extractResponse['responses'][
-                0]['textAnnotations'][0]['description']
-
-            if request.form['fromLanguage'] == 'detect':
-                fromLanguage = extractResponse['responses'][0][
-                    'textAnnotations'][0]['locale'].split('-')[0]
-            else:
-                fromLanguage = request.form['fromLanguage']
+            ocrResult = extractResponse['ErrorDetails']
 
         return render_template('extract-result.html',
                                ocrResult=ocrResult,
@@ -207,33 +183,17 @@ def showTranslateInput():
 def showTranslateOutput():
     """Handler for TranslateOutput page which displays results for text translation."""
     if 'inputText' in request.form and 'toLanguage' in request.form:
-        apiKey = json.loads(
-            open('secret/googlecloud_secret.json', 'r').read())['googlecloud']['api_key']
-
-        translateUrl = "https://www.googleapis.com/language/translate/v2"
+        translator = Translator()
 
         if request.form['fromLanguage'] == 'detect':
-            translateDat = {'key': apiKey,
-                            'q': request.form['inputText'],
-                            'format': 'text',
-                            'target': request.form['toLanguage']}
+            translateResponse = translator.translate(request.form['inputText'],
+                                                     dest=request.form['toLanguage'])
         else:
-            translateDat = {'key': apiKey,
-                            'q': request.form['inputText'],
-                            'format': 'text',
-                            'target': request.form['toLanguage'],
-                            'source': request.form['fromLanguage']}
+            translateResponse = translator.translate(request.form['inputText'],
+                                                     src=request.form['toLanguage'],
+                                                     dest=request.form['toLanguage'])
 
-        translateResponse = requests.get(translateUrl, translateDat, headers={
-                                         'Referer': 'https://myapp-textsuite.herokuapp.com/'})
-
-        if translateResponse.status_code != 200 or translateResponse.json().get('error'):
-            outputText = translateResponse.text
-
-        else:
-            translateResponse = translateResponse.json()
-            outputText = translateResponse['data'][
-                'translations'][0]['translatedText']
+        outputText = translateResponse.text
 
         return render_template('translate-output.html',
                                inputText=request.form['inputText'],
@@ -308,6 +268,7 @@ def showQueryOutput():
                                errorContent='input text was not sent correctly',
                                mobileDevice=mobileDevice,
                                title='query-output')
+
 
 if __name__ == '__main__':
     app.secret_key = get_secret()
