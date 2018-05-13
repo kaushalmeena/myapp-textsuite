@@ -190,7 +190,7 @@ def showTranslateOutput():
                                                      dest=request.form['toLanguage'])
         else:
             translateResponse = translator.translate(request.form['inputText'],
-                                                     src=request.form['toLanguage'],
+                                                     src=request.form['fromLanguage'],
                                                      dest=request.form['toLanguage'])
 
         outputText = translateResponse.text

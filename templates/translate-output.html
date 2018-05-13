@@ -1,23 +1,24 @@
 {% extends "base.html" %} {% block content %}
-<!-- https://responsivevoice.org/ -->
-<script src="{{ url_for('static', filename='js/responsivevoice.min.js') }}"></script>
-<script>
-$(document).ready(function() {
-    setVoice('#toLanguage');
-});
-</script>
 <ol class="breadcrumb">
-    <li><a href="{{ url_for('showHome00') }}">home</a></li>
-    <li><a href="{{ url_for('showHome02') }}">translate</a></li>
-    <li><a href="{{ url_for('showTranslateInput') }}">input</a></li>
-    <li><a href="#">output</a></li>
+    <li>
+        <a href="{{ url_for('showHome00') }}">home</a>
+    </li>
+    <li>
+        <a href="{{ url_for('showHome02') }}">translate</a>
+    </li>
+    <li>
+        <a href="{{ url_for('showTranslateInput') }}">input</a>
+    </li>
+    <li>
+        <a href="#">output</a>
+    </li>
 </ol>
 <div class="thumbnail">
     <div class="well">
         <span class="dl-horizontal font-size-medium">
-                <dt>step 2</dt>
-                <dd>check out text translation output</dd>
-            </span>
+            <dt>step 2</dt>
+            <dd>check out text translation output</dd>
+        </span>
         <br>
         <div class="form-group">
             <textarea id="inputText" class="form-control" rows="5">{{inputText}}</textarea>
@@ -29,8 +30,9 @@ $(document).ready(function() {
         </div>
         <div class="input-group">
             <span class="input-group-btn">
-                    <button onclick="talkText()" id="talkButton" type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>&zwnj;
-            </button>
+                <button onclick="talkText()" id="talkButton" type="button" class="btn btn-default btn-md">
+                    <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>&zwnj;
+                </button>
             </span>
             <select id="talkVoice" class="form-control">
                 <option value="UK English Female">UK English Female</option>
@@ -110,4 +112,11 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
+<!-- https://responsivevoice.org/ -->
+<script src="{{ url_for('static', filename='js/responsivevoice.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        setVoice('#toLanguage');
+    });
+</script>
 {% endblock %}

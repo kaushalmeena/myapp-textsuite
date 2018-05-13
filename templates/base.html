@@ -2,17 +2,12 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- https://jquery.com/ -->
-    <script src="{{ url_for( 'static', filename='js/jquery-3.1.1.min.js' ) }}"></script>
     <!-- http://getbootstrap.com/ -->
     <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <!-- CUSTOM-FAVICON -->
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
     <!-- CUSTOM-STYLESHEET -->
     <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/custom-styles.css') }}">
-    <!-- CUSTOM-SCRIPT -->
-    <script src="{{ url_for( 'static', filename='js/custom-scripts.js' ) }}"></script>
     <title>TextSuite : {{title}}</title>
 </head>
 
@@ -32,32 +27,36 @@
                 <ul class="nav navbar-nav">
                     {% if title=='main-home' %}
                     <li id="linkHome" class="active">
-                    {% else %}
-                    <li id="linkHome">
-                    {% endif %}
-                         <a href="{{ url_for('showHome00') }}"><span class="glyphicon glyphicon-home"></span>&nbsp;home</a>
-                    </li>
-                    {% if title=='extract-home' %}
-                    <li id="linkExtract" class="active">
-                    {% else %}
-                    <li id="linkExtract">
-                    {% endif %}
-                        <a href="{{ url_for('showHome01') }}"><span class="glyphicon glyphicon-picture"></span>&nbsp;extract</a>
-                    </li>
-                    {% if title=='translate-home' %}
-                    <li id="linkTranslate" class="active">
-                    {% else %}
-                    <li id="linkTranslate">
-                    {% endif %}
-                        <a href="{{ url_for('showHome02') }}"><span class="glyphicon glyphicon-cog"></span>&nbsp;translate</a>
-                    </li>
-                    {% if title=='query-home' %}
-                    <li id="linkQuery" class="active">
-                    {% else %}
-                    <li id="linkQuery">
-                    {% endif %}
-                        <a href="{{ url_for('showHome03') }}"><span class="glyphicon glyphicon-search"></span>&nbsp;query</a>
-                    </li>
+                        {% else %}
+                        <li id="linkHome">
+                            {% endif %}
+                            <a href="{{ url_for('showHome00') }}">
+                                <span class="glyphicon glyphicon-home"></span>&nbsp;home</a>
+                        </li>
+                        {% if title=='extract-home' %}
+                        <li id="linkExtract" class="active">
+                            {% else %}
+                            <li id="linkExtract">
+                                {% endif %}
+                                <a href="{{ url_for('showHome01') }}">
+                                    <span class="glyphicon glyphicon-picture"></span>&nbsp;extract</a>
+                            </li>
+                            {% if title=='translate-home' %}
+                            <li id="linkTranslate" class="active">
+                                {% else %}
+                                <li id="linkTranslate">
+                                    {% endif %}
+                                    <a href="{{ url_for('showHome02') }}">
+                                        <span class="glyphicon glyphicon-cog"></span>&nbsp;translate</a>
+                                </li>
+                                {% if title=='query-home' %}
+                                <li id="linkQuery" class="active">
+                                    {% else %}
+                                    <li id="linkQuery">
+                                        {% endif %}
+                                        <a href="{{ url_for('showHome03') }}">
+                                            <span class="glyphicon glyphicon-search"></span>&nbsp;query</a>
+                                    </li>
                 </ul>
             </div>
         </div>
@@ -67,14 +66,20 @@
     </div>
     <footer class="footer">
         <h4 class="text-center">
-			<a href="{{ url_for('showHome00') }}">home</a> | 
-			<a href="{{ url_for('showHome01') }}">extract</a> | 
-			<a href="{{ url_for('showHome02') }}">translate</a> | 
-			<a href="{{ url_for('showHome03') }}">query</a> | 
-			<a href="https://github.com/kaushalmeena1996/myapp-textsuite">github</a>
-		</h4>
+            <a href="{{ url_for('showHome00') }}">home</a> |
+            <a href="{{ url_for('showHome01') }}">extract</a> |
+            <a href="{{ url_for('showHome02') }}">translate</a> |
+            <a href="{{ url_for('showHome03') }}">query</a> |
+            <a href="https://github.com/kaushalmeena1996/myapp-textsuite">github</a>
+        </h4>
     </footer>
     </div>
+    <!-- https://jquery.com/ -->
+    <script src="{{ url_for( 'static', filename='js/jquery-3.1.1.min.js' ) }}"></script>
+    <!-- http://getbootstrap.com/ -->
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <!-- CUSTOM-SCRIPT -->
+    <script src="{{ url_for( 'static', filename='js/custom-scripts.js' ) }}"></script>
 </body>
 
 </html>
