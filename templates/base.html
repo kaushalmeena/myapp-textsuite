@@ -25,7 +25,7 @@
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse-group">
                 <ul class="nav navbar-nav">
-                    <li id="linkHome" {% if title=='main-home' %}class="active" {% else %}>
+                    <li id="linkHome" {% if title=='main-home' %}class="active" {% endif %}>
                         <a href="{{ url_for('showHome00') }}">
                             <span class="glyphicon glyphicon-home"></span>&nbsp;home</a>
                     </li>
