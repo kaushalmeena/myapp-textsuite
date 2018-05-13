@@ -25,38 +25,22 @@
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse-group">
                 <ul class="nav navbar-nav">
-                    {% if title=='main-home' %}
-                    <li id="linkHome" class="active">
-                        {% else %}
-                        <li id="linkHome">
-                            {% endif %}
-                            <a href="{{ url_for('showHome00') }}">
-                                <span class="glyphicon glyphicon-home"></span>&nbsp;home</a>
-                        </li>
-                        {% if title=='extract-home' %}
-                        <li id="linkExtract" class="active">
-                            {% else %}
-                            <li id="linkExtract">
-                                {% endif %}
-                                <a href="{{ url_for('showHome01') }}">
-                                    <span class="glyphicon glyphicon-picture"></span>&nbsp;extract</a>
-                            </li>
-                            {% if title=='translate-home' %}
-                            <li id="linkTranslate" class="active">
-                                {% else %}
-                                <li id="linkTranslate">
-                                    {% endif %}
-                                    <a href="{{ url_for('showHome02') }}">
-                                        <span class="glyphicon glyphicon-cog"></span>&nbsp;translate</a>
-                                </li>
-                                {% if title=='query-home' %}
-                                <li id="linkQuery" class="active">
-                                    {% else %}
-                                    <li id="linkQuery">
-                                        {% endif %}
-                                        <a href="{{ url_for('showHome03') }}">
-                                            <span class="glyphicon glyphicon-search"></span>&nbsp;query</a>
-                                    </li>
+                    <li id="linkHome" {% if title=='main-home' %}class="active" {% else %}>
+                        <a href="{{ url_for('showHome00') }}">
+                            <span class="glyphicon glyphicon-home"></span>&nbsp;home</a>
+                    </li>
+                    <li id="linkExtract" {% if title=='extract-home' %}class="active" {% endif %}>
+                        <a href="{{ url_for('showHome01') }}">
+                            <span class="glyphicon glyphicon-picture"></span>&nbsp;extract</a>
+                    </li>
+                    <li id="linkTranslate" {% if title=='translate-home' %}class="active" {% endif %}>
+                        <a href="{{ url_for('showHome02') }}">
+                            <span class="glyphicon glyphicon-cog"></span>&nbsp;translate</a>
+                    </li>
+                    <li id="linkQuery" {% if title=='query-home' %}class="active" {% endif %}>
+                        <a href="{{ url_for('showHome03') }}">
+                            <span class="glyphicon glyphicon-search"></span>&nbsp;query</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -80,6 +64,15 @@
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <!-- CUSTOM-SCRIPT -->
     <script src="{{ url_for( 'static', filename='js/custom-scripts.js' ) }}"></script>
+    {% if title=='translate-output' %}
+    <!-- https://responsivevoice.org/ -->
+    <script src="{{ url_for('static', filename='js/responsivevoice.min.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            setVoice('#toLanguage');
+        });
+    </script>
+    {% endif %}
 </body>
 
 </html>
