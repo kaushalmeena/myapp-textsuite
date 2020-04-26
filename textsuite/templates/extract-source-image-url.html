@@ -1,0 +1,87 @@
+{% extends "base.html" %} {% block content %}
+<ol class="breadcrumb">
+  <li>
+    <a href="{{ url_for('home00') }}">home</a>
+  </li>
+  <li>
+    <a href="{{ url_for('home01') }}">extract</a>
+  </li>
+  <li>
+    <a href="{{ url_for('source') }}">source</a>
+  </li>
+  <li>
+    <a href="#">image-url</a>
+  </li>
+</ol>
+<div class="thumbnail">
+  <div class="well">
+    <dl class="dl-horizontal font-size-medium">
+      <dt>step 2</dt>
+      <dd>enter url of image</dd>
+    </dl>
+    <div hidden id="imageDiv" class="well">
+      <img onerror="resetUrl()" id="ocrImage" src="#" alt="ocr-image">
+    </div>
+    <div class="input-group">
+      <span class="input-group-btn">
+        <button onclick="loadImage()" type="button" class="btn btn-default btn-md">
+          <span class="glyphicon glyphicon-link" aria-hidden="true"></span>&zwnj;
+        </button>
+      </span>
+      <input id="imageUrl" type="text" class="form-control" aria-label="...">
+    </div>
+    <br>
+    <div hidden id="alertText" class="alert alert-danger">
+      <button type="button" class="close" onclick="hideAlert()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>ERROR :</strong> no image has been loaded.
+    </div>
+    <form class="form" onsubmit="return checkSubmit('#imageContainer')" action="{{ url_for( 'extract_result' ) }}"
+      method="post">
+      <input hidden id="imageContainer" type="text" name="image_container"></input>
+      <input hidden id="image_source" type="text" name="image_source" value="2"></input>
+      <select class="form-control" id="fromLanguage" name="from_language">
+        <option value="detect" selected="selected">[ Detect ]</option>
+        <option value="ara">Arabic</option>
+        <option value="bul">Bulgarian</option>
+        <option value="cht">Chinese(Traditional)</option>
+        <option value="chs">Chinese(Simplified)</option>
+        <option value="hrv">Croatian</option>
+        <option value="cze">Czech</option>
+        <option value="dan">Danish</option>
+        <option value="dut">Dutch</option>
+        <option value="eng">English</option>
+        <option value="fin">Finnish</option>
+        <option value="fre">French</option>
+        <option value="ger">German</option>
+        <option value="gre">Greek</option>
+        <option value="hun">Hungarian</option>
+        <option value="ita">Italian</option>
+        <option value="jpn">Japanese</option>
+        <option value="kor">Korean</option>
+        <option value="nor">Norwegian</option>
+        <option value="pol">Polish</option>
+        <option value="por">Portuguese</option>
+        <option value="rus">Russian</option>
+        <option value="slv">Slovenian</option>
+        <option value="spa">Spanish</option>
+        <option value="swe">Swedish</option>
+        <option value="tur">Turkish</option>
+      </select>
+      <br>
+      <div class="form-button-group">
+        <button id="buttonExtract" type="submit" class="btn btn-success btn-lg">
+          <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Extract
+        </button>
+        <button onclick="resetUrl()" id="buttonReset" type="button" class="btn btn-warning btn-lg">
+          <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Reset
+        </button>
+        <button onclick="loadImage()" id="buttonLoad" type="button" class="btn btn-default btn-lg">
+          <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Load
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

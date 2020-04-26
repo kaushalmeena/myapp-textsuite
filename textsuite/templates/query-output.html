@@ -1,0 +1,48 @@
+{% extends "base.html" %} {% block content %}
+<ol class="breadcrumb">
+  <li><a href="{{ url_for('home00') }}">home</a></li>
+  <li><a href="{{ url_for('home03') }}">query</a></li>
+  <li><a href="{{ url_for('query_input') }}">input</a></li>
+  <li><a href="#">output</a></li>
+</ol>
+<div class="thumbnail">
+  <div class="well">
+    <span class="dl-horizontal font-size-medium">
+      <dt>step 2</dt>
+      <dd>check out results for query</dd>
+    </span>
+    <br>
+    {% if query_error == true %}
+    <div class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+          aria-hidden="true">&times;</span></button>
+      <strong>{{error_header}} :</strong> {{error_content}}
+    </div>
+    {% endif %}
+    <div class="input-group">
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-th"
+            aria-hidden="true"></span>&zwnj;
+        </button>
+      </span>
+      <input id="inputText" type="text" class="form-control" value="{{input_text}}">
+    </div>
+    <br>
+    <div id="imageDiv" class="well">
+      <img id="queryImage" src="{{image_container}}" alt="ocr-image">
+    </div>
+    <div class="form-button-group">
+      {% if mobile_device == false %}
+      <a href="{{image_container}}" download="queryimage.gif"><button id="saveButton" type="button"
+          class="btn btn-success btn-lg">
+          <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save
+        </button></a>
+      {% endif %}
+      <button onclick="sendTo('#inputText','/translate/input')" id="buttonTranslate" type="button"
+        class="btn btn-warning btn-lg">
+        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Translate
+      </button>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "myapp-textsuite"
+version = "0.1.0"
+description = "A web app which uses various api to achieve text extraction, text translation and text querying."
+license = "MIT"
+authors = ["kaushalmeena <kaushal.meena1996@gmail.com>"]
+readme = "README.md"
+repository = "https://github.com/kaushalmeena1996/myapp-textsuite"
+packages = [
+    { include = "textsuite" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+Flask = "^1.1.2"
+requests = "^2.23.0"
+Flask_Compress = "^1.4.0"
+python-dotenv = "^0.13.0"
+user_agents = "^2.1"
+googletrans = "^2.4.0"
+
+[tool.poetry.dev-dependencies]
+pylint = "^2.4.4"
+autopep8 = "^1.5.2"
+
+[tool.poetry.scripts]
+start = "textsuite.server:start"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"

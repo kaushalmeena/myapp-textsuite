@@ -1,0 +1,116 @@
+{% extends "base.html" %} {% block content %}
+<ol class="breadcrumb">
+  <li>
+    <a href="{{ url_for('home00') }}">home</a>
+  </li>
+  <li>
+    <a href="{{ url_for('home02') }}">translate</a>
+  </li>
+  <li>
+    <a href="{{ url_for('translate_input') }}">input</a>
+  </li>
+  <li>
+    <a href="#">output</a>
+  </li>
+</ol>
+<div class="thumbnail">
+  <div class="well">
+    <span class="dl-horizontal font-size-medium">
+      <dt>step 2</dt>
+      <dd>check out text translation output</dd>
+    </span>
+    <br>
+    <div class="form-group">
+      <textarea id="inputText" class="form-control" rows="5">{{input_text}}</textarea>
+    </div>
+    <br>
+    <div class="form-group">
+      <textarea id="resultantText" class="form-control" rows="5">{{output_text}}</textarea>
+      <input hidden id="toLanguage" value="{{to_language}}"></input>
+    </div>
+    <div class="input-group">
+      <span class="input-group-btn">
+        <button onclick="talkText()" id="talkButton" type="button" class="btn btn-default btn-md">
+          <span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span>&zwnj;
+        </button>
+      </span>
+      <select id="talkVoice" class="form-control">
+        <option value="UK English Female">UK English Female</option>
+        <option value="UK English Male">UK English Male</option>
+        <option value="US English Female">US English Female</option>
+        <option value="Arabic Male">Arabic Male</option>
+        <option value="Arabic Female">Arabic Female</option>
+        <option value="Armenian Male">Armenian Male</option>
+        <option value="Australian Female">Australian Female</option>
+        <option value="Brazilian Portuguese Female">Brazilian Portuguese Female</option>
+        <option value="Chinese Female">Chinese Female</option>
+        <option value="Chinese (Hong Kong) Female">Chinese (Hong Kong) Female</option>
+        <option value="Chinese Taiwan Female">Chinese Taiwan Female</option>
+        <option value="Czech Female">Czech Female</option>
+        <option value="Danish Female">Danish Female</option>
+        <option value="Deutsch Female">Deutsch Female</option>
+        <option value="Dutch Female">Dutch Female</option>
+        <option value="Finnish Female">Finnish Female</option>
+        <option value="French Female">French Female</option>
+        <option value="Greek Female">Greek Female</option>
+        <option value="Hindi Female">Hindi Female</option>
+        <option value="Hungarian Female">Hungarian Female</option>
+        <option value="Indonesian Female">Indonesian Female</option>
+        <option value="Italian Female">Italian Female</option>
+        <option value="Japanese Female">Japanese Female</option>
+        <option value="Korean Female">Korean Female</option>
+        <option value="Latin Female">Latin Female</option>
+        <option value="Norwegian Female">Norwegian Female</option>
+        <option value="Polish Female">Polish Female</option>
+        <option value="Portuguese Female">Portuguese Female</option>
+        <option value="Romanian Male">Romanian Male</option>
+        <option value="Russian Female">Russian Female</option>
+        <option value="Slovak Female">Slovak Female</option>
+        <option value="Spanish Female">Spanish Female</option>
+        <option value="Spanish Latin American Female">Spanish Latin American Female</option>
+        <option value="Swedish Female">Swedish Female</option>
+        <option value="Tamil Male">Tamil Male</option>
+        <option value="Thai Female">Thai Female</option>
+        <option value="Turkish Female">Turkish Female</option>
+        <option value="Afrikaans Male">Afrikaans Male</option>
+        <option value="Albanian Male">Albanian Male</option>
+        <option value="Bosnian Male">Bosnian Male</option>
+        <option value="Catalan Male">Catalan Male</option>
+        <option value="Croatian Male">Croatian Male</option>
+        <option value="Czech Male">Czech Male</option>
+        <option value="Danish Male">Danish Male</option>
+        <option value="Esperanto Male">Esperanto Male</option>
+        <option value="Finnish Male">Finnish Male</option>
+        <option value="Greek Male">Greek Male</option>
+        <option value="Hungarian Male">Hungarian Male</option>
+        <option value="Icelandic Male">Icelandic Male</option>
+        <option value="Latin Male">Latin Male</option>
+        <option value="Latvian Male">Latvian Male</option>
+        <option value="Macedonian Male">Macedonian Male</option>
+        <option value="Moldavian Male">Moldavian Male</option>
+        <option value="Montenegrin Male">Montenegrin Male</option>
+        <option value="Norwegian Male">Norwegian Male</option>
+        <option value="Serbian Male">Serbian Male</option>
+        <option value="Serbo-Croatian Male">Serbo-Croatian Male</option>
+        <option value="Slovak Male">Slovak Male</option>
+        <option value="Swahili Male">Swahili Male</option>
+        <option value="Swedish Male">Swedish Male</option>
+        <option value="Vietnamese Male">Vietnamese Male</option>
+        <option value="Welsh Male">Welsh Male</option>
+        <option value="US English Male">US English Male</option>
+        <option value="Fallback UK Female">Fallback UK Female</option>
+      </select>
+    </div>
+    <br>
+    <div class="form-button-group">
+      <button onclick="sendTo('#resultantText','/query/input')" id="buttonQuery" type="button"
+        class="btn btn-success btn-lg">
+        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Query
+      </button>
+      <button onclick="copyText()" id="copyButton" type="button" class="btn btn-warning btn-lg">
+        <span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Copy
+      </button>
+    </div>
+  </div>
+</div>
+{% endblock %}

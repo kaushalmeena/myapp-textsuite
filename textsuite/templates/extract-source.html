@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  .button-group {
+    max-width: 300px;
+  }
+</style>
+<ol class="breadcrumb">
+  <li><a href="{{ url_for('home00') }}">home</a></li>
+  <li><a href="{{ url_for('home01') }}">extract</a></li>
+  <li><a href="#">source</a></li>
+</ol>
+<div class="thumbnail">
+  <div class="well">
+    <dl class="dl-horizontal font-size-medium">
+      <dt>step 1</dt>
+      <dd>select source from where to upload image</dd>
+    </dl>
+    <div class="button-group center-block">
+      <a class="btn btn-primary btn-lg btn-block" href="{{ url_for('image_source00') }}" role="button"><span
+          class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;image-upload</a>
+      {% if mobile_device == false %}
+      <a class="btn btn-warning btn-lg btn-block" href="{{ url_for('image_source01') }}" role="button"><span
+          class="glyphicon glyphicon-camera"></span>&nbsp;&nbsp;webcam-capture</a>
+      {% endif %}
+      <a class="btn btn-success btn-lg btn-block" href="{{ url_for('image_source02') }}" role="button"><span
+          class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;image-url</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
