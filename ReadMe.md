@@ -51,5 +51,5 @@ $ cp .env.default .env
 To start the project simply run:
 
 ```bash
-$ poetry run start
+$ poetry run dev
 ```
