@@ -234,7 +234,7 @@ def query_output():
 
 def start():
     """Start flask development server"""
-    app.config.from_object('textsuite.config.DevelopmentConfig')
+    app.config.from_object('app.config.DevelopmentConfig')
     app.run()
 
 

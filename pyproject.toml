@@ -6,7 +6,7 @@ authors = ["kaushalmeena <kaushal.meena1996@gmail.com>"]
 readme = "README.md"
 repository = "https://github.com/kaushalmeena1996/myapp-textsuite"
 packages = [
-    { include = "textsuite" }
+    { include = "app" }
 ]
 
 [tool.poetry.dependencies]
@@ -23,7 +23,8 @@ pylint = "^2.4.4"
 autopep8 = "^1.5.2"
 
 [tool.poetry.scripts]
-dev = "textsuite.server:start"
+dev = "app.server:start"
+start = "app.wsgi:start"
 
 [build-system]
 requires = ["poetry>=0.12"]
