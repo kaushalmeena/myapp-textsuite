@@ -2,7 +2,6 @@
 name = "myapp-textsuite"
 version = "0.1.0"
 description = "A web app which uses various api to achieve text extraction, text translation and text querying."
-license = "MIT"
 authors = ["kaushalmeena <kaushal.meena1996@gmail.com>"]
 readme = "README.md"
 repository = "https://github.com/kaushalmeena1996/myapp-textsuite"
