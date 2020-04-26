@@ -1,15 +1,13 @@
 {% extends "base.html" %} {% block content %}
-<!-- https://pixlcore.com/read/WebcamJS -->
-<script src="{{ url_for('static', filename='js/webcam.min.js') }}"></script>
 <ol class="breadcrumb">
   <li><a href="{{ url_for('home00') }}">home</a></li>
   <li><a href="{{ url_for('home01') }}">extract</a></li>
   <li><a href="{{ url_for('source') }}">source</a></li>
-  <li><a href="#">webcam-capture</a></li>
+  <li><a href="javascript:void(0)">webcam-capture</a></li>
 </ol>
 <div class="thumbnail">
   <div class="well">
-    <dl class="dl-horizontal font-size-medium">
+    <dl class="dl-horizontal font-size-md">
       <dt>step 2</dt>
       <dd>capture image using your webcam</dd>
     </dl>

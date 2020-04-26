@@ -3,11 +3,11 @@
   <li><a href="{{ url_for('home00') }}">home</a></li>
   <li><a href="{{ url_for('home03') }}">query</a></li>
   <li><a href="{{ url_for('query_input') }}">input</a></li>
-  <li><a href="#">output</a></li>
+  <li><a href="javascript:void(0)">output</a></li>
 </ol>
 <div class="thumbnail">
   <div class="well">
-    <span class="dl-horizontal font-size-medium">
+    <span class="dl-horizontal font-size-md">
       <dt>step 2</dt>
       <dd>check out results for query</dd>
     </span>
@@ -33,7 +33,7 @@
     </div>
     <div class="form-button-group">
       {% if mobile_device == false %}
-      <a href="{{image_container}}" download="queryimage.gif"><button id="saveButton" type="button"
+      <a href="{{image_container}}" download="query_image.gif"><button id="saveButton" type="button"
           class="btn btn-success btn-lg">
           <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Save
         </button></a>

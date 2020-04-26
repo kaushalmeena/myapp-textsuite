@@ -5,6 +5,9 @@
 }
 
 @media (max-width: 595px) {
+  #queryImage {
+    width: 100%;
+  }
   .form-button-group {
     width: 100%;
   }
@@ -45,6 +48,6 @@ ol {
   width: 280px;
 }
 
-.font-size-medium {
+.font-size-md {
   font-size: 26px;
 }
