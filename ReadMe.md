@@ -27,29 +27,40 @@ $ cd myapp-textsuite
 $ poetry install
 ```
 
-3. Change directory to the `app` folder and create `.env` file from `.env.default`:
+4. Add OCR API Key and Wolfram Alpha Application ID in secrets.json file located in `app/secrets` folder:
 
-```bash
-$ cd app
-$ cp .env.default .env
-```
+- For OCR API Key
 
-4. Add OCR API Key in .env file:
+  - Signup for a Free OCR API Key by visiting this [link](http://eepurl.com/bOLOcf).
+  - An API key will be sent to your mail, copy this API key and initialise the 'OCR_API_KEY' variable with your key in secrets.json file.
 
-   1. Signup for a Free OCR API Key by visiting this [link](http://eepurl.com/bOLOcf).
-   2. An API key will be sent to your mail, copy this API key and initialise the 'OCR_API_KEY' variable with your key in .env file.
+- For Wolfram Alpha Application ID
 
-5. Add Wolfram Alpha Application ID in .env file:
-
-   1. Signup for a Wolfram Alpha Application ID by visiting this [link](https://developer.wolframalpha.com/portal/signup.html). If already signed-up then sign in.
-   2. After signing in, on the My Apps tab. Click the 'Get an AppID' button and fill out the 'Get a New AppID' form. Use any Application name and description you like.
-   3. Click the 'Get AppID' button. Copy the APPID string and click 'OK'.
-   4. Initialise the 'WOLFRAMALPHA_APP_ID' variable with your AppID in .env file.
+  - Signup for a Wolfram Alpha Application ID by visiting this [link](https://developer.wolframalpha.com/portal/signup.html). If already signed-up then sign in.
+  - After signing in, on the My Apps tab. Click the 'Get an AppID' button and fill out the 'Get a New AppID' form. Use any Application name and description you like.
+  - Click the 'Get AppID' button. Copy the APPID string and click 'OK'.
+  - Initialise the 'WOLFRAMALPHA_APP_ID' variable with your AppID in secrets.json file.
 
 ## Usage
 
-To start the project simply run:
+To run the project simply run:
 
 ```bash
 $ poetry run dev
 ```
+
+Your app should now be running on [localhost:5000](http://localhost:5000/).
+
+## Deployment
+
+To push to heroku you need to install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli), afterwards you can run these commands:
+
+```bash
+$ heroku create
+$ git push heroku master
+$ heroku open
+```
+
+or
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)

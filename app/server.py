@@ -2,12 +2,9 @@
 """Python script for TextSuite server."""
 
 # python imports
-from flask import Flask, render_template, request, redirect
-from flask import url_for
+from flask import Flask, render_template, request, redirect, url_for
 from flask_compress import Compress
-
 from user_agents import parse
-
 from googletrans import Translator
 
 from app.config import DevelopmentConfig

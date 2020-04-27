@@ -14,7 +14,6 @@ python = "^3.7"
 Flask = "^1.1.2"
 requests = "^2.23.0"
 Flask_Compress = "^1.4.0"
-python-dotenv = "^0.13.0"
 user_agents = "^2.1"
 googletrans = "^2.4.0"
 
