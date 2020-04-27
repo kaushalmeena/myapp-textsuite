@@ -1,0 +1,5 @@
+{
+  "name": "myapp-textsuite",
+  "description": "A web app which uses various api to achieve text extraction, text translation and text querying.",
+  "repository": "https://github.com/kaushalmeena1996/myapp-textsuite"
+}
