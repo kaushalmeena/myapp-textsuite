@@ -241,4 +241,5 @@ def start():
 
 
 if __name__ == "__main__":
-    start()
+    app.config.from_object(DevelopmentConfig())
+    app.run()

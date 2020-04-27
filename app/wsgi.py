@@ -6,10 +6,11 @@ from app.config import ProductionConfig
 
 
 def start():
-    """Start flask production server"""
+    """Start flask development server"""
     app.config.from_object(ProductionConfig())
     app.run()
 
 
 if __name__ == "__main__":
-    start()
+    app.config.from_object(ProductionConfig())
+    app.run()

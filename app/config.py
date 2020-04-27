@@ -8,7 +8,7 @@ import os
 DOTENV_PATH = os.path.join(os.path.dirname(__file__), '.env')
 
 # Load environment variables from '.env' file
-load_dotenv(dotenv_path=DOTENV_PATH, verbose=True)
+load_dotenv(dotenv_path=DOTENV_PATH)
 
 
 class Config():
