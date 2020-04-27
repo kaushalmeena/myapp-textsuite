@@ -31,12 +31,12 @@ $ poetry install
 
 - For OCR API Key
 
-  - Signup for a Free OCR API Key by visiting this [link](http://eepurl.com/bOLOcf).
+  - Sign-up for a Free OCR API Key by visiting this [link](http://eepurl.com/bOLOcf).
   - An API key will be sent to your mail, copy this API key and initialise the 'OCR_API_KEY' variable with your key in secrets.json file.
 
 - For Wolfram Alpha Application ID
 
-  - Signup for a Wolfram Alpha Application ID by visiting this [link](https://developer.wolframalpha.com/portal/signup.html). If already signed-up then sign in.
+  - Sign-up for a Wolfram Alpha Application ID by visiting this [link](https://developer.wolframalpha.com/portal/signup.html). If already signed-up then sign in.
   - After signing in, on the My Apps tab. Click the 'Get an AppID' button and fill out the 'Get a New AppID' form. Use any Application name and description you like.
   - Click the 'Get AppID' button. Copy the APPID string and click 'OK'.
   - Initialise the 'WOLFRAMALPHA_APP_ID' variable with your AppID in secrets.json file.
