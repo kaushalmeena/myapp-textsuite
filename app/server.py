@@ -19,28 +19,28 @@ import base64
 app = Flask(__name__)
 Compress(app)
 
-# Main Home page
+
 @app.route('/')
 def home00():
     """Handler for Home00 page which displays main home screen."""
     return render_template('main-home.html',
                            title='main-home')
 
-# Extract Home page
+
 @app.route('/extract')
 def home01():
     """Handler for Home01 page which displays extract home screen."""
     return render_template('extract-home.html',
                            title='extract-home')
 
-# Translate Home page
+
 @app.route('/translate')
 def home02():
     """Handler for Home02 page which displays translate home screen."""
     return render_template('translate-home.html',
                            title='translate-home')
 
-# Query Home page
+
 @app.route('/query')
 def home03():
     """Handler for Home03 page which displays query home screen."""
@@ -48,7 +48,6 @@ def home03():
                            title='query-home')
 
 
-# Source page
 @app.route('/extract/source')
 def source():
     """Handler for Source page which displays sources for image upload."""
@@ -59,21 +58,21 @@ def source():
                            mobile_device=mobile_device,
                            title='extract-source')
 
-# Image Source (image-upload) page
+
 @app.route('/extract/source/image-upload')
 def image_source00():
     """Handler for Source00 page which provide functionality to upload image via image-upload."""
     return render_template('extract-source-image-upload.html',
                            title='image-upload')
 
-# Image Source (webcam-capture) page
+
 @app.route('/extract/source/webcam-capture')
 def image_source01():
     """Handler for Source01 page which provide functionality to upload image via webcam-capture."""
     return render_template('extract-source-webcam-capture.html',
                            title='webcam-capture')
 
-# Image Source (image-url) page
+
 @app.route('/extract/source/image-url')
 def image_source02():
     """Handler for Source02 page which provide functionality to upload image via webcam-capture."""
@@ -81,7 +80,6 @@ def image_source02():
                            title='image-url')
 
 
-# Extract Result page
 @app.route('/extract/result', methods=['POST'])
 def extract_result():
     """Handler for Extract-Result page which displays results for text extraction."""
@@ -133,7 +131,7 @@ def extract_result():
                                ocr_result='ERROR 400 : Bad Request',
                                title='extract-result')
 
-# Translate Input page
+
 @app.route('/translate/input', methods=['GET', 'POST'])
 def translate_input():
     """Handler for Translate-Input page which allow users to enter text to be translated."""
@@ -145,7 +143,7 @@ def translate_input():
         return render_template('translate-input.html',
                                title='translate-input')
 
-# Translate Output page
+
 @app.route('/translate/output', methods=['POST'])
 def translate_output():
     """Handler for Translate-Output page which displays results for text translation."""
@@ -172,7 +170,7 @@ def translate_output():
                                output_text='ERROR 400 : Bad Request',
                                title='translate-output')
 
-# Query Input page
+
 @app.route('/query/input', methods=['GET', 'POST'])
 def query_input():
     """Handler for Query-Input page which allow users to enter text to be queried."""
@@ -184,7 +182,7 @@ def query_input():
         return render_template('query-input.html',
                                title='translate-input')
 
-# Query Output page
+
 @app.route('/query/output', methods=['POST'])
 def query_output():
     """Handler for Query-Output page which displays results for text querying."""
