@@ -10,6 +10,8 @@ from user_agents import parse
 
 from googletrans import Translator
 
+from app.config import DevelopmentConfig
+
 import json
 import os
 import re
@@ -234,7 +236,7 @@ def query_output():
 
 def start():
     """Start flask development server"""
-    app.config.from_object('app.config.DevelopmentConfig')
+    app.config.from_object(DevelopmentConfig())
     app.run()
 
 

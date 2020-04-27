@@ -27,10 +27,10 @@ $ cd myapp-textsuite
 $ poetry install
 ```
 
-3. Change directory to the `textsuite` folder and create `.env` file from `.env.default`:
+3. Change directory to the `app` folder and create `.env` file from `.env.default`:
 
 ```bash
-$ cd textsuite
+$ cd app
 $ cp .env.default .env
 ```
 
