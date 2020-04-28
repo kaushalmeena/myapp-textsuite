@@ -22,7 +22,7 @@ pylint = "^2.4.4"
 autopep8 = "^1.5.2"
 
 [tool.poetry.scripts]
-dev = "app.server:start"
+dev = "app.main:start"
 start = "app.wsgi:start"
 
 [build-system]

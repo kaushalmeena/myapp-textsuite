@@ -1,7 +1,7 @@
 # wsgi.py
 """Python script for TextSuite deployment."""
 
-from app.server import app
+from app.main import app
 from app.config import ProductionConfig
 
 
