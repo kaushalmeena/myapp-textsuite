@@ -19,12 +19,7 @@
 }
 
 body {
-  padding-top: 70px;
   background-image: url("/static/img/bgdesign.png");
-}
-
-button {
-  width: 140px;
 }
 
 ol {
@@ -42,10 +37,6 @@ ol {
 #ocrCamera {
   width: 640px;
   height: 480px;
-}
-
-#talkDiv {
-  width: 280px;
 }
 
 .font-size-md {

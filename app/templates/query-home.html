@@ -1,16 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
 </script>
-<ol class="breadcrumb">
-  <li><a href="{{ url_for('home00') }}">home</a></li>
-  <li><a href="javascript:void(0)">query</a></li>
-</ol>
-<div class="thumbnail">
-  <div class="jumbotron">
-    <h1>query</h1>
-    <p>query text to calculate or know anything.</p>
-    <p><a class="btn btn-primary btn-lg" href="{{ url_for('query_input') }}" role="button">continue&nbsp;<span
-          class="glyphicon glyphicon-chevron-right"></span></a></p>
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="{{ url_for('home00') }}">home</a></li>
+    <li><a href="javascript:void(0)">query</a></li>
+  </ol>
+  <div class="thumbnail">
+    <div class="jumbotron">
+      <h1>query</h1>
+      <p class="lead">query text to calculate or know anything</p>
+      <a class="btn btn-primary btn-lg" href="{{ url_for('query_input') }}" role="button">
+        continue <i class="glyphicon glyphicon-chevron-right"></i>
+      </a>
+    </div>
   </div>
 </div>
 {% endblock %}

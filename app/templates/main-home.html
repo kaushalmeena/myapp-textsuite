@@ -1,23 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
-</script>
-<ol class="breadcrumb">
-  <li><a href="javascript:void(0)">home</a></li>
-</ol>
-<div class="thumbnail">
-  <div class="jumbotron">
-    <h1>TextSuite</h1>
-    <p>provides extraction, translation, querying of text.</p>
-    <div class="form-button-group">
-      <p>
-        <a class="btn btn-primary btn-lg" href="{{ url_for('home01') }}" role="button"><span
-            class="glyphicon glyphicon-picture"></span>&nbsp;extract</a>
-        <a class="btn btn-warning btn-lg" href="{{ url_for('home02') }}" role="button"><span
-            class="glyphicon glyphicon-cog"></span>&nbsp;translate</a>
-        <a class="btn btn-success btn-lg" href="{{ url_for('home03') }}" role="button"><span
-            class="glyphicon glyphicon-search"></span>&nbsp;query</a>
-      </p>
+<main class="container">
+  <ol class="breadcrumb">
+    <li><a href="javascript:void(0)">home</a></li>
+  </ol>
+  <div class="thumbnail">
+    <div class="jumbotron">
+      <h1>TextSuite</h1>
+      <p class="lead">provides extraction, translation, querying of text.</p>
+      <div class="form-button-group">
+        <a class="btn btn-primary btn-lg" href="{{ url_for('home01') }}" role="button">
+          <i class="glyphicon glyphicon-picture"></i> extract
+        </a>
+        <a class="btn btn-warning btn-lg" href="{{ url_for('home02') }}" role="button">
+          <i class="glyphicon glyphicon-cog"></i> translate
+        </a>
+        <a class="btn btn-success btn-lg" href="{{ url_for('home03') }}" role="button">
+          <i class="glyphicon glyphicon-search"></i> query
+        </a>
+      </div>
     </div>
   </div>
-</div>
+</main>
 {% endblock %}

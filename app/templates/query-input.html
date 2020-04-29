@@ -1,45 +1,48 @@
 {% extends "base.html" %} {% block content %}
-<ol class="breadcrumb">
-  <li><a href="{{ url_for('home00') }}">home</a></li>
-  <li><a href="{{ url_for('home03') }}">query</a></li>
-  <li><a href="javascript:void(0)">input</a></li>
-</ol>
-<div class="thumbnail">
-  <div class="well">
-    <span class="dl-horizontal font-size-md">
-      <dt>step 1</dt>
-      <dd>enter text for query</dd>
-    </span>
-    <br>
-    <div hidden id="alertText" class="alert alert-danger">
-      <button type="button" class="close" onclick="hideAlert()"><span aria-hidden="true">&times;</span></button>
-      <strong>ERROR :</strong> no input text detected.
-    </div>
-    <form class="form" onsubmit="return checkSubmit('#inputText')" action="{{ url_for( 'query_output' ) }}"
-      method="post">
-      <div id="inputGroup" class="input-group">
-        <span class="input-group-btn">
-          <button type="button" class="btn btn-default btn-md"><span class="glyphicon glyphicon-th"
-              aria-hidden="true"></span>&zwnj;
-          </button>
-        </span>
-        <input id="inputText" name="input_text" type="text" class="form-control" value="{{input_text}}"></input>
-        <input hidden id="inputWidth" name="input_width" type="text"></input>
-      </div>
+<main class="container">
+  <ol class="breadcrumb">
+    <li><a href="{{ url_for('home00') }}">home</a></li>
+    <li><a href="{{ url_for('home03') }}">query</a></li>
+    <li><a href="javascript:void(0)">input</a></li>
+  </ol>
+  <div class="thumbnail">
+    <div class="well">
+      <span class="dl-horizontal font-size-md">
+        <dt>step 1</dt>
+        <dd>enter text for query</dd>
+      </span>
       <br>
-      <div class="form-button-group">
-        <button id="buttonQuery" type="submit" class="btn btn-success btn-lg">
-          <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Query
-        </button>
-        <button onclick="sendTo('#inputText','/translate/input')" id="buttonTranslate" type="button"
-          class="btn btn-warning btn-lg">
-          <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Translate
-        </button>
-        <button onclick="resetText()" id="buttonReset" type="button" class="btn btn-default btn-lg">
-          <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> Reset
-        </button>
+      <div hidden id="alertText" class="alert alert-danger">
+        <button type="button" class="close" onclick="hideAlert()"><span aria-hidden="true">&times;</span></button>
+        <strong>ERROR :</strong> no input text detected.
       </div>
-    </form>
+      <form class="form" onsubmit="return checkSubmit('#inputText')" action="{{ url_for( 'query_output' ) }}"
+        method="post">
+        <div id="inputGroup" class="input-group">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default btn-md"><i class="glyphicon glyphicon-th"
+                aria-hidden="true"></i>&zwnj;
+            </button>
+          </span>
+          <input id="inputText" name="input_text" type="text" class="form-control" value="{{input_text}}"
+            required></input>
+          <input hidden id="inputWidth" name="input_width" type="text"></input>
+        </div>
+        <br>
+        <div class="form-button-group">
+          <button type="submit" class="btn btn-success btn-lg">
+            <i class="glyphicon glyphicon-search" aria-hidden="true"></i> query
+          </button>
+          <button onclick="sendTo('#inputText','/translate/input')" id="buttonTranslate" type="button"
+            class="btn btn-warning btn-lg">
+            <i class="glyphicon glyphicon-cog" aria-hidden="true"></i> translate
+          </button>
+          <button id="buttonReset" type="reset" class="btn btn-default btn-lg">
+            <i class="glyphicon glyphicon-refresh" aria-hidden="true"></i> reset
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
+</main>
 {% endblock %}

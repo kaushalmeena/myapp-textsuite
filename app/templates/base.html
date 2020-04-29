@@ -8,58 +8,14 @@
   <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
   <!-- CUSTOM-STYLESHEET -->
   <link rel="stylesheet" type=text/css href="{{ url_for('static', filename='css/custom-styles.css') }}">
-  <title>TextSuite : {{title}}</title>
+  <title>text-suite : {{title}}</title>
 </head>
 
 <body>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-          data-target="#navbar-collapse-group" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="{{ url_for('home00') }}">TextSuite</a>
-      </div>
-      <div class="collapse navbar-collapse" id="navbar-collapse-group">
-        <ul class="nav navbar-nav">
-          <li id="linkHome" {% if title=='main-home' %}class="active" {% endif %}>
-            <a href="{{ url_for('home00') }}">
-              <span class="glyphicon glyphicon-home"></span>&nbsp;home</a>
-          </li>
-          <li id="linkExtract" {% if title=='extract-home' %}class="active" {% endif %}>
-            <a href="{{ url_for('home01') }}">
-              <span class="glyphicon glyphicon-picture"></span>&nbsp;extract</a>
-          </li>
-          <li id="linkTranslate" {% if title=='translate-home' %}class="active" {% endif %}>
-            <a href="{{ url_for('home02') }}">
-              <span class="glyphicon glyphicon-cog"></span>&nbsp;translate</a>
-          </li>
-          <li id="linkQuery" {% if title=='query-home' %}class="active" {% endif %}>
-            <a href="{{ url_for('home03') }}">
-              <span class="glyphicon glyphicon-search"></span>&nbsp;query</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <div class="container">
-    {% block content %}
-    {% endblock %}
-  </div>
-  <footer class="footer">
-    <h4 class="text-center">
-      <a href="{{ url_for('home00') }}">home</a> |
-      <a href="{{ url_for('home01') }}">extract</a> |
-      <a href="{{ url_for('home02') }}">translate</a> |
-      <a href="{{ url_for('home03') }}">query</a> |
-      <a href="https://github.com/kaushalmeena1996/myapp-textsuite">github</a>
-    </h4>
-  </footer>
-  </div>
+  {% include 'navbar.html'%}
+  {% block content %}
+  {% endblock %}
+  {% include 'hidden.html'%}
   <!-- https://jquery.com/ -->
   <script src="{{ url_for( 'static', filename='js/jquery-3.1.1.min.js' ) }}"></script>
   <!-- http://getbootstrap.com/ -->

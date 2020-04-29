@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-</script>
-<ol class="breadcrumb">
-  <li><a href="{{ url_for('home00') }}">home</a></li>
-  <li><a href="javascript:void(0)">extract</a></li>
-</ol>
-<div class="thumbnail">
-  <div class="jumbotron">
-    <h1>extract</h1>
-    <p>extract text from any image.</p>
-    <p><a class="btn btn-primary btn-lg" href="{{ url_for('source') }}" role="button">continue&nbsp;<span
-          class="glyphicon glyphicon-chevron-right"></span></a></p>
+<main class="container">
+  <ol class="breadcrumb">
+    <li><a href="{{ url_for('home00') }}">home</a></li>
+    <li><a href="javascript:void(0)">extract</a></li>
+  </ol>
+  <div class="thumbnail">
+    <div class="jumbotron">
+      <h1>extract</h1>
+      <p class="lead">extract text from any image</p>
+      <a class="btn btn-primary btn-lg" href="{{ url_for('source') }}" role="button">
+        continue <i class="glyphicon glyphicon-chevron-right"></i>
+      </a>
+    </div>
   </div>
-</div>
+</main>
 {% endblock %}

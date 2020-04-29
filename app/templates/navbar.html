@@ -1,0 +1,36 @@
+{% block navbar %}
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-group"
+        aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{ url_for('home00') }}">text-suite</a>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar-collapse-group">
+      <ul class="nav navbar-nav">
+        <li class="{{'active' if title=='main-home'}}">
+          <a href="{{ url_for('home00') }}">
+            <i class="glyphicon glyphicon-home"></i> home</a>
+        </li>
+        <li class="{{'active' if title=='extract-home'}}">
+          <a href="{{ url_for('home01') }}">
+            <i class="glyphicon glyphicon-picture"></i> extract</a>
+        </li>
+        <li class="{{'active' if title=='translate-home'}}">
+          <a href="{{ url_for('home02') }}">
+            <i class="glyphicon glyphicon-cog"></i> translate</a>
+        </li>
+        <li class="{{'active' if title=='query-home'}}">
+          <a href="{{ url_for('home03') }}">
+            <i class="glyphicon glyphicon-search"></i> query</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endblock %}
