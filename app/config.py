@@ -19,3 +19,4 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     ENV = 'development'
+    TEMPLATES_AUTO_RELOAD = True

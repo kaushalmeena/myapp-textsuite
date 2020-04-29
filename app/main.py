@@ -177,10 +177,10 @@ def query_input():
     if request.method == 'POST':
         return render_template('query-input.html',
                                input_text=request.form['input_text'],
-                               title='translate-input')
+                               title='query-input')
     else:
         return render_template('query-input.html',
-                               title='translate-input')
+                               title='query-input')
 
 
 @app.route('/query/output', methods=['POST'])
