@@ -7,7 +7,7 @@
       "description": "API key from ocr.space for converting images to text."
     },
     "WOLFRAMALPHA_APP_ID": {
-      "description": "API key from wolframalpha.com for getting images of its result pages."
+      "description": "APP id from wolframalpha.com for getting images of its result pages."
     }
   }
 }
