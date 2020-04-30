@@ -16,10 +16,11 @@ requests = "^2.23.0"
 Flask_Compress = "^1.4.0"
 user_agents = "^2.1"
 googletrans = "^2.4.0"
+gunicorn = "^20.0.4"
 
 [tool.poetry.dev-dependencies]
-pylint = "^2.4.4"
-autopep8 = "^1.5.2"
+black = {version = "^19.10b0", allow-prereleases = true}
+flake8 = "^3.7.9"
 
 [tool.poetry.scripts]
 dev = "app.main:start"
