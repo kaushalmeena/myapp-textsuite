@@ -27,19 +27,25 @@ $ cd myapp-textsuite
 $ poetry install
 ```
 
-4. Add OCR API Key and Wolfram Alpha Application ID in secrets.json file located in `app/secrets` folder:
+3. Create `.env` file by creating copy of `.env.default` file:
+
+```bash
+$ cp .env.default .env
+```
+
+4. Add OCR API Key and Wolfram Alpha Application ID in `.env` file:
 
 - For OCR API Key
 
   - Sign-up for a Free OCR API Key by visiting this [link](http://eepurl.com/bOLOcf).
-  - An API key will be sent to your mail, copy this API key and initialise the 'OCR_API_KEY' variable with your key in secrets.json file.
+  - An API key will be sent to your mail, copy this API key and initialise the 'OCR_API_KEY' variable with your key in `.env` file.
 
 - For Wolfram Alpha Application ID
 
   - Sign-up for a Wolfram Alpha Application ID by visiting this [link](https://developer.wolframalpha.com/portal/signup.html). If already signed-up then sign in.
   - After signing in, on the My Apps tab. Click the 'Get an AppID' button and fill out the 'Get a New AppID' form. Use any Application name and description you like.
   - Click the 'Get AppID' button. Copy the APPID string and click 'OK'.
-  - Initialise the 'WOLFRAMALPHA_APP_ID' variable with your AppID in secrets.json file.
+  - Initialise the 'WOLFRAMALPHA_APP_ID' variable with your AppID in `.env` file.
 
 ## Usage
 
@@ -53,10 +59,12 @@ Your app should now be running on [localhost:5000](http://localhost:5000/).
 
 ## Deployment
 
-To push to heroku you need to install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli), afterwards you can run these commands:
+To push to Heroku you need to install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) afterwards, you can run these commands:
 
 ```bash
 $ heroku create
+$ heroku config:set OCR_API_KEY='<YOUR-API-KEY-HERE>'
+$ heroku config:set WOLFRAMALPHA_APP_ID='<YOUR-APP-ID-HERE>'
 $ git push heroku master
 $ heroku open
 ```
