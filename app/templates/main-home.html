@@ -6,19 +6,26 @@
   </ol>
   <div class="thumbnail">
     <div class="jumbotron">
-      <h1>TextSuite</h1>
-      <p class="lead">provides extraction, translation, querying of text.</p>
-      <div class="form-button-group">
-        <a class="btn btn-primary btn-lg" href="{{ url_for('home01') }}" role="button">
-          <i class="glyphicon glyphicon-picture"></i> extract
-        </a>
-        <a class="btn btn-warning btn-lg" href="{{ url_for('home02') }}" role="button">
-          <i class="glyphicon glyphicon-cog"></i> translate
-        </a>
-        <a class="btn btn-success btn-lg" href="{{ url_for('home03') }}" role="button">
-          <i class="glyphicon glyphicon-search"></i> query
-        </a>
-      </div>
+      <h1>text-suite</h1>
+      <p class="lead">provides extraction, translation, querying of text</p>
+      <a class="btn btn-primary btn-lg custom-button" href="{{ url_for('home01') }}" role="button">
+        <div class="custom-button-content">
+          <i class="glyphicon glyphicon-picture"></i>
+          <div class="margin-left-6">extract</div>
+        </div>
+      </a>
+      <a class="btn btn-warning btn-lg custom-button" href="{{ url_for('home02') }}" role="button">
+        <div class="custom-button-content">
+          <i class="glyphicon glyphicon-cog"></i>
+          <div class="margin-left-6">translate</div>
+        </div>
+      </a>
+      <a class="btn btn-success btn-lg custom-button" href="{{ url_for('home03') }}" role="button">
+        <div class="custom-button-content">
+          <i class="glyphicon glyphicon-search"></i>
+          <div class="margin-left-6">query</div>
+        </div>
+      </a>
     </div>
   </div>
 </main>

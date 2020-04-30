@@ -7,38 +7,35 @@
   </ol>
   <div class="thumbnail">
     <div class="well">
-      <span class="dl-horizontal font-size-md">
+      <dl class="dl-horizontal font-size-22">
         <dt>step 1</dt>
         <dd>enter text for query</dd>
-      </span>
-      <br>
-      <div hidden id="alertText" class="alert alert-danger">
-        <button type="button" class="close" onclick="hideAlert()"><span aria-hidden="true">&times;</span></button>
-        <strong>ERROR :</strong> no input text detected.
-      </div>
-      <form class="form" onsubmit="return checkSubmit('#inputText')" action="{{ url_for( 'query_output' ) }}"
-        method="post">
-        <div id="inputGroup" class="input-group">
-          <span class="input-group-btn">
-            <button type="button" class="btn btn-default btn-md"><i class="glyphicon glyphicon-th"
-                aria-hidden="true"></i>&zwnj;
-            </button>
-          </span>
+      </dl>
+      <form action="{{ url_for( 'query_output' ) }}" method="post">
+        <div class="form-group">
           <input id="inputText" name="input_text" type="text" class="form-control" value="{{input_text}}"
-            required></input>
-          <input hidden id="inputWidth" name="input_width" type="text"></input>
+            aria-describedby="inputTextHelpBlock" required />
+          <span id="inputTextHelpBlock" class="help-block">enter query to given to wolfram-alpha</span>
         </div>
-        <br>
         <div class="form-button-group">
-          <button type="submit" class="btn btn-success btn-lg">
-            <i class="glyphicon glyphicon-search" aria-hidden="true"></i> query
+          <button type="submit" class="btn btn-success btn-lg custom-button">
+            <div class="custom-button-content">
+              <i class="glyphicon glyphicon-search"></i>
+              <div class="margin-left-6">query</div>
+            </div>
           </button>
-          <button onclick="sendTo('#inputText','/translate/input')" id="buttonTranslate" type="button"
-            class="btn btn-warning btn-lg">
-            <i class="glyphicon glyphicon-cog" aria-hidden="true"></i> translate
+          <button type="button" class="btn btn-warning btn-lg custom-button"
+            onclick="sendTo('#inputText','/translate/input')">
+            <div class="custom-button-content">
+              <i class="glyphicon glyphicon-cog"></i>
+              <div class="margin-left-6">translate</div>
+            </div>
           </button>
-          <button id="buttonReset" type="reset" class="btn btn-default btn-lg">
-            <i class="glyphicon glyphicon-refresh" aria-hidden="true"></i> reset
+          <button type="button" class="btn btn-default btn-lg custom-button" onclick="resetText()">
+            <div class="custom-button-content">
+              <i class="glyphicon glyphicon-refresh"></i>
+              <div class="margin-left-6">reset</div>
+            </div>
           </button>
         </div>
       </form>

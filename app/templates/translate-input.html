@@ -7,23 +7,20 @@
   </ol>
   <div class="thumbnail">
     <div class="well">
-      <span class="dl-horizontal font-size-md">
+      <dl class="dl-horizontal font-size-22">
         <dt>step 1</dt>
         <dd>enter text for translation</dd>
-      </span>
-      <br>
-      <div hidden id="alertText" class="alert alert-danger">
-        <button type="button" class="close" onclick="hideAlert()"><span aria-hidden="true">&times;</span></button>
-        <strong>ERROR :</strong> no input text detected.
-      </div>
-      <form class="form" onsubmit="return checkSubmit('#inputText')" action="{{ url_for( 'translate_output' ) }}"
-        method="post">
+      </dl>
+      <form action="{{ url_for( 'translate_output' ) }}" method="post">
         <div class="form-group">
-          <textarea id="inputText" name="input_text" class="form-control" rows="5" required>{{input_text}}</textarea>
+          <textarea id="inputText" name="input_text" class="form-control" rows="5" aria-describedby="inputTextHelpBlock"
+            required>{{input_text}}</textarea>
+          <span id="inputTextHelpBlock" class="help-block">enter text to be translated</span>
         </div>
         <div class="row">
           <div class="form-group col-md-6">
-            <select class="form-control" id="fromLanguage" name="from_language">
+            <select id="fromLanguage" class="form-control" name="from_language"
+              aria-describedby="fromLanguageHelpBlock">
               <option value="detect" selected="selected">[ Detect ]</option>
               <option value="af">Afrikaans</option>
               <option value="sq">Albanian</option>
@@ -125,14 +122,15 @@
               <option value="uz">Uzbek</option>
               <option value="vi">Vietnamese</option>
               <option value="cy">Welsh</option>
-              <option value="xh<">Xhosa</option>
+              <option value="xh">Xhosa</option>
               <option value="yi">Yiddish</option>
               <option value="yo">Yoruba</option>
               <option value="zu">Zulu</option>
             </select>
+            <span id="fromLanguageHelpBlock" class="help-block">select language of text</span>
           </div>
           <div class="form-group col-md-6">
-            <select class="form-control" id="toLanguage" name="to_language">
+            <select class="form-control" id="toLanguage" name="to_language" aria-describedby="toLanguageHelpBlock">
               <option value="af">Afrikaans</option>
               <option value="sq">Albanian</option>
               <option value="am">Amharic</option>
@@ -233,22 +231,33 @@
               <option value="uz">Uzbek</option>
               <option value="vi">Vietnamese</option>
               <option value="cy">Welsh</option>
-              <option value="xh<">Xhosa</option>
+              <option value="xh">Xhosa</option>
               <option value="yi">Yiddish</option>
               <option value="yo">Yoruba</option>
               <option value="zu">Zulu</option>
             </select>
+            <span id="toLanguageHelpBlock" class="help-block">select language in which text to be translated</span>
           </div>
         </div>
         <div class="form-button-group">
-          <button id="buttonTranslate" type="submit" class="btn btn-success btn-lg">
-            <i class="glyphicon glyphicon-cog" aria-hidden="true"></i> translate
+          <button type="submit" class="btn btn-success btn-lg custom-button">
+            <div class="custom-button-content">
+              <i class="glyphicon glyphicon-cog"></i>
+              <div class="margin-left-6">translate</div>
+            </div>
           </button>
-          <button onclick="sendTo('#inputText','/query/input')" type="button" class="btn btn-warning btn-lg">
-            <i class="glyphicon glyphicon-search" aria-hidden="true"></i> query
+          <button type="button" class="btn btn-warning btn-lg custom-button"
+            onclick="sendTo('#inputText','/query/input')">
+            <div class="custom-button-content">
+              <i class="glyphicon glyphicon-search"></i>
+              <div class="margin-left-6">query</div>
+            </div>
           </button>
-          <button id="buttonReset" type="reset" class="btn btn-default btn-lg">
-            <i class="glyphicon glyphicon-refresh" aria-hidden="true"></i> reset
+          <button type="button" class="btn btn-default btn-lg custom-button" onclick="resetText()">
+            <div class="custom-button-content">
+              <i class="glyphicon glyphicon-refresh"></i>
+              <div class="margin-left-6">reset</div>
+            </div>
           </button>
         </div>
       </form>

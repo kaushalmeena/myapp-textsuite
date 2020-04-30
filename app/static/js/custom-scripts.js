@@ -1,245 +1,150 @@
-function readImage(input) {
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
+function handleUploadError() {
+  $('#imageContainer').val('');
+  $('#imageFile').val('');
+  $('#imageDiv').hide();
+  $('#alertText').text("uploaded image is invalid")
+  $('#alertDiv').show();
+}
+
+function readUpload() {
+  var files = $('#imageFile').prop('files');
+  var reader = null;
+  if (files && files[0]) {
+    reader = new FileReader();
     reader.onload = function (e) {
-      $('#ocrImage').attr('src', e.target.result);
+      $('#extractImage').attr('src', e.target.result);
       $('#imageContainer').val(e.target.result);
-      $('#alertText').hide();
       $('#imageDiv').show();
+      $('#alertDiv').hide();
     };
-    reader.readAsDataURL(input.files[0]);
+    reader.onerror = function () {
+      $('#imageContainer').val('');
+      $('#imageFile').val('');
+      $('#imageDiv').hide();
+      $('#alertText').text("error occued while reading image")
+      $('#alertDiv').show();
+    }
+    reader.readAsDataURL(files[0]);
   }
 }
 
-function openImage() {
-  $('#imageUpload').trigger('click');
-}
-
-function loadImage() {
-  var imageUrl = $('#imageUrl').val();
-  $('#ocrImage').attr('src', imageUrl);
-  $('#buttonLoad').prop('disabled', true);
-  $('#imageContainer').val(imageUrl);
-  $('#imageDiv').show();
-}
-
-function resetImage() {
+function resetUpload() {
+  $('#imageFile').val('');
+  $('#imageContainer').val('');
+  $('#fromLanguage').val("detect");
   $('#imageDiv').hide();
-  $("#imageUpload").val("");
-  $("#imageContainer").val("");
-  $('#fromLanguage').val("detect");
+  $('#alertDiv').hide();
 }
 
-function resetUrl() {
-  $('#buttonLoad').prop('disabled', false);
+function resetURL() {
+  $('#imageURL').val('');
+  $('#imageContainer').val('');
+  $('#fromLanguage').val("detect");
   $('#imageDiv').hide();
-  $('#imageUrl').val("");
-  $("#imageContainer").val("");
-  $('#fromLanguage').val("detect");
+  $('#alertDiv').hide();
 }
 
-function resetText() {
-  $("#inputText").val("");
-  $('#alertText').hide();
-  $('#fromLanguage').val("detect");
-  $('#toLanguage').val("en");
-}
-
-function checkSubmit(elementID) {
-  var element = $(elementID).val();
-  if (element.length) {
-    stopCamera();
-    $("#inputWidth").val($("#inputGroup").width() - 40);
+function checkCapture() {
+  var value = $('#imageContainer').val()
+  if (value) {
     return true;
   } else {
-    $('#alertText').show();
+    $('#alertText').text("please take photo first")
+    $('#alertDiv').show();
     return false;
   }
 }
 
-function openCamera() {
-  $('#cameraDiv').show();
-  $('#buttonCamera').prop('disabled', true);
-  Webcam.attach('#ocrCamera');
+function resetCapture() {
+  stopCamera()
+  $('#imageContainer').val('');
+  $('#fromLanguage').val("detect");
+  $('#imageDiv').hide();
+  $('#alertDiv').hide();
 }
 
-function takeSnapshot() {
-  Webcam.snap(function (data_uri) {
-    $('#ocrImage').attr('src', data_uri);
-    $('#buttonCamera').hide();
-    $('#imageContainer').val(data_uri);
-    $('#alertText').hide();
-    $('#imageDiv').show();
-  });
+var webcamStream = null;
+
+function openCamera() {
+  var video = $('#webcamVideo').get(0);
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function (stream) {
+        webcamStream = stream
+        video.srcObject = stream;
+        video.play();
+        $('#buttonCamera').prop('disabled', true);
+        $('#webcamDiv').show();
+      })
+      .catch(function (error) {
+        $('#imageContainer').val('');
+        $('#imageDiv').hide();
+        $('#alertText').text('could not access the camera')
+        $('#alertDiv').show();
+      });
+  } else {
+    $('#imageContainer').val('');
+    $('#imageDiv').hide();
+    $('#alertText').text("your machine doesn't support webcam")
+    $('#alertDiv').show();
+  }
 }
 
 function stopCamera() {
-  Webcam.reset();
-  $('#cameraDiv').hide();
-  $('#buttonCamera').show();
+  var video = $('#webcamVideo').get(0)
+  if (video) {
+    video.pause();
+    video.src = '';
+  }
+  if (webcamStream) {
+    webcamStream.getTracks()[0].stop();
+  }
+  $('#webcamDiv').hide();
   $('#buttonCamera').prop('disabled', false);
 }
 
+function takePhoto() {
+  var canvas = $('#webcamCanvas').get(0);
+  var video = $('#webcamVideo').get(0);
+  var context = null;
+  var data = '';
+  if (canvas && video) {
+    context = canvas.getContext('2d');
+    canvas.height = video.videoHeight;
+    canvas.width = video.videoWidth;
+    context.drawImage(video, 0, 0);
+    data = canvas.toDataURL('image/png');
+    $('#imageContainer').val(data);
+    $('#imageDiv').show();
+    $('#alertDiv').hide();
+  } else {
+    stopCamera();
+    $('#imageContainer').val('');
+    $('#imageDiv').hide();
+    $('#alertText').text("your machine doesn't support webcam")
+    $('#alertDiv').show();
+  }
+}
+
+function resetText() {
+  $('#inputText').val('');
+  $('#fromLanguage').val("detect");
+  $('#toLanguage').val("en");
+  $('#alertDiv').hide();
+}
 
 function copyText() {
-  $('#resultantText').select();
+  $('#outputText').select();
   document.execCommand("copy");
-  alert('text copied to clipboard.');
-}
-
-function talkText() {
-  ocrText = $('#resultantText').val();
-  talkVoice = $('#talkVoice').val();
-  responsiveVoice.speak(ocrText, talkVoice, {
-    onstart: function () {
-      $('#talkButton').prop('disabled', true);
-    },
-    onend: function () {
-      $('#talkButton').prop('disabled', false);
-    }
-  });
-}
-
-function setVoice(elementID) {
-  var sourceLanguage = $(elementID).val();
-  var voice = 'UK English Female';
-  switch (sourceLanguage) {
-    case 'en':
-      voice = "UK English Female";
-      break;
-    case 'ar':
-      voice = "Arabic Female";
-      break;
-    case 'hy':
-      voice = "Armenian Male";
-      break;
-    case 'zh':
-      voice = "Chinese Female";
-      break;
-    case 'cs':
-      voice = "Czech Female";
-      break;
-    case 'da':
-      voice = "Danish Female";
-      break;
-    case 'de':
-      voice = "Deutsch Female";
-      break;
-    case 'nl':
-      voice = "Dutch Female";
-      break;
-    case 'fi':
-      voice = "Finnish Female";
-      break;
-    case 'fr':
-      voice = "French Female";
-      break;
-    case 'el':
-      voice = "Greek Female";
-      break;
-    case 'hi':
-      voice = "Hindi Female";
-      break;
-    case 'hu':
-      voice = "Hungarian Female";
-      break;
-    case 'id':
-      voice = "Indonesian Female";
-      break;
-    case 'it':
-      voice = "Italian Female";
-      break;
-    case 'ja':
-      voice = "Japanese Female";
-      break;
-    case 'ko':
-      voice = "Korean Female";
-      break;
-    case 'la':
-      voice = "Latin Female";
-      break;
-    case 'no':
-      voice = "Norwegian Female";
-      break;
-    case 'pl':
-      voice = "Polish Female";
-      break;
-    case 'pt':
-      voice = "Portuguese Female";
-      break;
-    case 'ro':
-      voice = "Romanian Male";
-      break;
-    case 'ru':
-      voice = "Russian Female";
-      break;
-    case 'sk':
-      voice = "Slovak Female";
-      break;
-    case 'es':
-      voice = "Spanish Female";
-      break;
-    case 'sv':
-      voice = "Swedish Female";
-      break;
-    case 'ta':
-      voice = "Tamil Male";
-      break;
-    case 'th':
-      voice = "Thai Femalee";
-      break;
-    case 'tr':
-      voice = "Turkish Female";
-      break;
-    case 'af':
-      voice = "Afrikaans Male";
-      break;
-    case 'sq':
-      voice = "Albanian Male";
-      break;
-    case 'bs':
-      voice = "Bosnian Male";
-      break;
-    case 'ca':
-      voice = "Catalan Male";
-      break;
-    case 'hr':
-      voice = "Croatian Male";
-      break;
-    case 'eo':
-      voice = "Esperanto Male";
-      break;
-    case 'is':
-      voice = "Icelandic Male";
-      break;
-    case 'lv':
-      voice = "Latvian Male";
-      break;
-    case 'mk':
-      voice = "Macedonian Male";
-      break;
-    case 'sr':
-      voice = "Serbian Male";
-      break;
-    case 'sw':
-      voice = "Swahili Male";
-      break;
-    case 'vi':
-      voice = "Vietnamese Male";
-      break;
-    case 'cy':
-      voice = "Welsh Male";
-      break;
-  }
-  $('#talkVoice').val(voice);
+  alert('text copied to clipboard');
 }
 
 function hideAlert() {
-  $('#alertText').hide();
+  $('#alertDiv').hide();
 }
 
-function sendTo(elementID, toLocation) {
-  var value = $(elementID).val();
+function sendTo(id, toLocation) {
+  var value = $(id).val();
   $('#hiddenForm').attr("action", toLocation);
   $('#hiddenInput').val(value)
   $('#hiddenForm').submit()

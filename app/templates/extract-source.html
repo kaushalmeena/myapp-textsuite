@@ -8,22 +8,34 @@
   </ol>
   <div class="thumbnail">
     <div class="well">
-      <dl class="dl-horizontal font-size-md">
+      <dl class="dl-horizontal font-size-22">
         <dt>step 1</dt>
         <dd>select source from where to upload image</dd>
       </dl>
-      <div class="form-button-group text-center">
-        <a class="btn btn-primary btn-lg btn-block" href="{{ url_for('image_source00') }}" role="button">
-          <i class="glyphicon glyphicon-folder-open"></i> image-upload
+      <div class="custom-button-group" role="group" aria-label="source-group">
+        <a class="btn btn-primary btn-lg btn-block margin-top-3 margin-bottom-3" href="{{ url_for('image_source00') }}"
+          role="button">
+          <div class="custom-button-content">
+            <i class="glyphicon glyphicon-open"></i>
+            <div class="margin-left-6">image-upload</div>
+          </div>
+        </a>
+        <a class="btn btn-success btn-lg btn-block margin-top-3 margin-bottom-3" href="{{ url_for('image_source02') }}"
+          role="button">
+          <div class="custom-button-content">
+            <i class="glyphicon glyphicon-link"></i>
+            <div class="margin-left-6">image-url</div>
+          </div>
         </a>
         {% if mobile_device == false %}
-        <a class="btn btn-warning btn-lg btn-block" href="{{ url_for('image_source01') }}" role="button">
-          <i class="glyphicon glyphicon-camera"></i> webcam-capture
+        <a class="btn btn-warning btn-lg btn-block margin-top-3 margin-bottom-3" href="{{ url_for('image_source01') }}"
+          role="button">
+          <div class="custom-button-content">
+            <i class="glyphicon glyphicon-camera"></i>
+            <div class="margin-left-6">webcam-capture</div>
+          </div>
         </a>
         {% endif %}
-        <a class="btn btn-success btn-lg btn-block" href="{{ url_for('image_source02') }}" role="button">
-          <i class="glyphicon glyphicon-link"></i> image-url
-        </a>
       </div>
     </div>
   </div>

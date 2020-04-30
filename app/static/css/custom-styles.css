@@ -1,19 +1,14 @@
-@media (min-width: 596px) {
-  .form-button-group a {
-    width: 140px;
+@media (min-width: 601px) {
+  .custom-button-group {
+    max-width: 300px;
   }
 }
 
-@media (max-width: 595px) {
-  #queryImage {
+@media (max-width: 600px) {
+  .custom-button {
     width: 100%;
   }
-  .form-button-group {
-    width: 100%;
-  }
-  .form-button-group button,
-  .form-button-group a {
-    margin-top: 5px;
+  .width-md-100 {
     width: 100%;
   }
 }
@@ -26,19 +21,64 @@ ol {
   border: solid 1px #d7dbdd;
 }
 
-#ocrImage {
-  max-height: 300px;
+.custom-button {
+  min-width: 140px;
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 
-#imageDiv {
+.custom-button-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-alert-content {
+  display: flex;
+  align-items: center;
+}
+
+.custom-button-group {
   text-align: center;
+  margin: auto;
 }
 
-#ocrCamera {
-  width: 640px;
-  height: 480px;
+.flex-grow-1 {
+  flex-grow: 1;
 }
 
-.font-size-md {
-  font-size: 26px;
+.margin-left-6 {
+  margin-left: 6px;
+}
+
+.margin-right-6 {
+  margin-right: 6px;
+}
+
+.margin-top-3 {
+  margin-top: 3px;
+}
+
+.margin-bottom-3 {
+  margin-bottom: 3px;
+}
+
+.margin-top-10 {
+  margin-top: 10px;
+}
+
+.font-size-22 {
+  font-size: 22px;
+}
+
+.min-width-300 {
+  min-width: 300px;
+}
+
+.max-height-640 {
+  max-height: 640px;
+}
+
+.max-width-full {
+  max-width: 100%;
 }

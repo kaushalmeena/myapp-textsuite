@@ -6,15 +6,11 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_compress import Compress
 from user_agents import parse
 from googletrans import Translator
+from base64 import b64encode
 
 from app.config import DevelopmentConfig
 
-import json
-import os
-import re
 import requests
-import urllib
-import base64
 
 app = Flask(__name__)
 Compress(app)
@@ -80,64 +76,68 @@ def image_source02():
                            title='image-url')
 
 
-@app.route('/extract/result', methods=['POST'])
-def extract_result():
-    """Handler for Extract-Result page which displays results for text extraction."""
-    if 'image_container' in request.form:
-        api_key = app.config.get("OCR_API_KEY")
-        extract_url = "https://api.ocr.space/parse/image"
+@app.route('/extract/output', methods=['POST'])
+def extract_output():
+    """Handler for Extract-Output page which displays results for text extraction."""
+    template_values = {
+        'title': 'extract-output'
+    }
 
-        if request.form['image_source'] == '0' or request.form['image_source'] == '1':
-            image_content = request.form['image_container']
+    if 'image_container' in request.form and 'image_source' in request.form:
+        image_container = request.form.get('image_container')
+        image_source = request.form.get('image_source')
+        from_language = request.form.get('from_language', 'eng')
+
+        api_key = app.config.get('OCR_API_KEY')
+        extract_url = 'https://api.ocr.space/parse/image'
+
+        extract_payload = {
+            'apiKey': api_key
+        }
+
+        if image_source == 'image-upload' or image_source == 'webcam-capture':
+            extract_payload['base64Image'] = image_container
         else:
-            image_content = base64.b64encode(
-                urllib.request.urlopen(request.form['image_container']).read())
+            extract_payload['url'] = image_container
 
-        if request.form['from_language'] == 'detect':
-            from_language = 'en'
-            extract_payload = {
-                "apiKey": api_key,
-                "base64Image": image_content
-            }
+        if not from_language == 'detect':
+            extract_payload['language'] = from_language
 
-        else:
-            from_language = request.form['from_language']
-            extract_payload = {
-                "apiKey": api_key,
-                "base64Image": image_content,
-                "language": request.form['from_language']
-            }
+        template_values['image_source'] = image_source
 
         extract_response = requests.post(extract_url, extract_payload)
 
         if extract_response.status_code == 200:
-            extract_response = extract_response.json()
-            ocr_result = ''
-            for response in extract_response['ParsedResults']:
-                ocr_result += response['ParsedText']
+            json_data = extract_response.json()
 
+            if json_data['OCRExitCode'] == 1:
+                output_text = ''
+
+                for response in json_data['ParsedResults']:
+                    output_text += response['ParsedText']
+
+                template_values['output_text'] = output_text
+            else:
+                template_values['error_title'] = 'error'
+                template_values['error_content'] = json_data['ErrorMessage'][0]
         else:
-            extract_response = extract_response.json()
-            ocr_result = extract_response['ErrorDetails']
-
-        return render_template('extract-result.html',
-                               ocr_result=ocr_result,
-                               image_container=request.form['image_container'],
-                               image_source=request.form['image_source'],
-                               from_language=from_language,
-                               title='extract-result')
+            template_values['error_title'] = 'error'
+            template_values['error_content'] = extract_response.text
     else:
-        return render_template('extract-result.html',
-                               ocr_result='ERROR 400 : Bad Request',
-                               title='extract-result')
+        template_values['error_title'] = 'error 400'
+        template_values['error_content'] = 'bad request'
+        template_values['image_source'] = 'image_upload'
+
+    return render_template('extract-output.html', **template_values)
 
 
 @app.route('/translate/input', methods=['GET', 'POST'])
 def translate_input():
     """Handler for Translate-Input page which allow users to enter text to be translated."""
     if request.method == 'POST':
+        input_text = request.form.get('input_text')
         return render_template('translate-input.html',
-                               input_text=request.form['input_text'],
+                               input_text=input_text,
                                title='translate-input')
     else:
         return render_template('translate-input.html',
@@ -147,36 +147,40 @@ def translate_input():
 @app.route('/translate/output', methods=['POST'])
 def translate_output():
     """Handler for Translate-Output page which displays results for text translation."""
+    template_values = {
+        'title': 'translate-output'
+    }
+
     if 'input_text' in request.form and 'to_language' in request.form:
+        input_text = request.form.get('input_text')
+        to_language = request.form.get('to_language')
+        from_language = request.form.get('from_language', 'en')
+
         translator = Translator()
 
-        if request.form['from_language'] == 'detect':
-            translate_response = translator.translate(request.form['input_text'],
-                                                      dest=request.form['to_language'])
+        if from_language == 'detect':
+            translate_response = translator.translate(input_text,
+                                                      dest=to_language)
         else:
-            translate_response = translator.translate(request.form['input_text'],
-                                                      src=request.form['from_language'],
-                                                      dest=request.form['to_language'])
+            translate_response = translator.translate(input_text,
+                                                      src=from_language,
+                                                      dest=to_language)
 
-        output_text = translate_response.text
-
-        return render_template('translate-output.html',
-                               input_text=request.form['input_text'],
-                               output_text=output_text,
-                               to_language=request.form['to_language'],
-                               title='translate-output')
+        template_values['output_text'] = translate_response.text
     else:
-        return render_template('translate-output.html',
-                               output_text='ERROR 400 : Bad Request',
-                               title='translate-output')
+        template_values['error_title'] = 'error 400'
+        template_values['error_content'] = 'bad request'
+
+    return render_template('translate-output.html', **template_values)
 
 
 @app.route('/query/input', methods=['GET', 'POST'])
 def query_input():
     """Handler for Query-Input page which allow users to enter text to be queried."""
     if request.method == 'POST':
+        input_text = request.form.get('input_text')
         return render_template('query-input.html',
-                               input_text=request.form['input_text'],
+                               input_text=input_text,
                                title='query-input')
     else:
         return render_template('query-input.html',
@@ -186,47 +190,40 @@ def query_input():
 @app.route('/query/output', methods=['POST'])
 def query_output():
     """Handler for Query-Output page which displays results for text querying."""
-    user_agent = parse(request.user_agent.string)
-    mobile_device = user_agent.is_mobile
+    template_values = {
+        'title': 'translate-output'
+    }
 
-    if 'input_text' in request.form and 'input_width' in request.form:
+    if 'input_text' in request.form:
+        input_text = request.form.get('input_text')
+
         app_id = app.config.get("WOLFRAMALPHA_APP_ID")
         query_url = 'http://api.wolframalpha.com/v1/simple'
-        query_payload = {'appid': app_id,
-                         'i': request.form['input_text'],
-                         'width': request.form['input_width'],
-                         'units': 'metric'}
+
+        query_payload = {
+            'appid': app_id,
+            'i': input_text,
+            'width': 500,
+            'units': 'metric'
+        }
 
         query_response = requests.get(query_url, query_payload)
 
         if query_response.status_code == 200:
-            base_64_data = str(base64.b64encode(
-                query_response.content).decode("utf-8"))
-            image_container = "data:image/gif;base64," + base_64_data
+            query_content = query_response.content
+            base_64_data = str(b64encode(query_content).decode('utf-8'))
 
-            return render_template('query-output.html',
-                                   input_text=request.form['input_text'],
-                                   image_container=image_container,
-                                   mobile_device=mobile_device,
-                                   title='query-output')
+            image_container = 'data:image/gif;base64,' + base_64_data
+
+            template_values['image_container'] = image_container
         else:
-            error_header = "ERROR"
-            error_content = query_response.text
-
-            return render_template('query-output.html',
-                                   input_text=request.form['input_text'],
-                                   query_error=True,
-                                   error_header=error_header,
-                                   error_content=error_content,
-                                   mobile_device=mobile_device,
-                                   title='query-output')
+            template_values['error_title'] = 'error'
+            template_values['error_content'] = 'internal server error'
     else:
-        return render_template('query-output.html',
-                               query_error=True,
-                               error_header='ERROR 400',
-                               error_content='input text was not sent correctly',
-                               mobile_device=mobile_device,
-                               title='query-output')
+        template_values['error_title'] = 'error 400'
+        template_values['error_content'] = 'bad request'
+
+    return render_template('query-output.html', **template_values)
 
 
 def start():

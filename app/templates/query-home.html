@@ -10,8 +10,11 @@
     <div class="jumbotron">
       <h1>query</h1>
       <p class="lead">query text to calculate or know anything</p>
-      <a class="btn btn-primary btn-lg" href="{{ url_for('query_input') }}" role="button">
-        continue <i class="glyphicon glyphicon-chevron-right"></i>
+      <a class="btn btn-primary btn-lg custom-button" href="{{ url_for('query_input') }}" role="button">
+        <div class="custom-button-content">
+          <div class="margin-right-6">continue</div>
+          <i class="glyphicon glyphicon-chevron-right"></i>
+        </div>
       </a>
     </div>
   </div>
