@@ -2,14 +2,14 @@
 {% block content %}
 <div class="container">
   <ol class="breadcrumb">
-    <li><a href="{{ url_for('home00') }}">home</a></li>
+    <li><a href="{{ url_for('app.home00') }}">home</a></li>
     <li><a href="javascript:void(0)">translate</a></li>
   </ol>
   <div class="thumbnail">
     <div class="jumbotron">
       <h1>translate</h1>
       <p class="lead">traslate text to any language</p>
-      <a class="btn btn-primary btn-lg custom-button" href="{{ url_for('translate_input') }}" role="button">
+      <a class="btn btn-primary btn-lg custom-button" href="{{ url_for('app.translate_input') }}" role="button">
         <div class="custom-button-content">
           <div class="margin-right-6">continue</div>
           <i class="glyphicon glyphicon-chevron-right"></i>

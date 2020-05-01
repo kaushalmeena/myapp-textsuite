@@ -1,16 +1,24 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% block content %}
 <main class="container">
   <ol class="breadcrumb">
-    <li><a href="{{ url_for('home00') }}">home</a></li>
-    <li><a href="{{ url_for('home02') }}">translate</a></li>
-    <li><a href="{{ url_for('translate_input') }}">input</a></li>
+    <li><a href="{{ url_for('app.home00') }}">home</a></li>
+    <li><a href="{{ url_for('app.home01') }}">extract</a></li>
+    <li><a href="{{ url_for('app.source') }}">source</a></li>
+    {% if image_source == 'image-upload' %}
+    <li><a href="{{ url_for('app.image_source00') }}">image-upload</a></li>
+    {% elif image_source == 'image-url' %}
+    <li><a href="{{ url_for('app.image_source02') }}">image-url</a></li>
+    {% elif image_source == 'webcam-capture' %}
+    <li><a href="{{ url_for('app.image_source01') }}">webcam-capture</a></li>
+    {% endif %}
     <li><a href="javascript:void(0)">output</a></li>
   </ol>
   <div class="thumbnail">
     <div class="well">
       <dl class="dl-horizontal font-size-22">
-        <dt>step 2</dt>
-        <dd>check out text translation output</dd>
+        <dt>step 3</dt>
+        <dd>check out ocr results</dd>
       </dl>
       {% if error_title and error_content %}
       <div class="alert alert-danger margin-top-10" role="alert">
@@ -20,11 +28,18 @@
       <form>
         {% if output_text %}
         <div class="form-group">
-          <textarea id="outputText" class="form-control" rows="5">{{output_text}}</textarea>
+          <textarea id="outputText" name="output_text" class="form-control" rows="5">{{output_text}}</textarea>
         </div>
         {% endif %}
         <div class="form-button-group">
           <button type="button" class="btn btn-success btn-lg custom-button"
+            onclick="sendTo('#outputText','/translate/input')">
+            <span class="custom-button-content">
+              <i class="glyphicon glyphicon-cog"></i>
+              <span class="margin-left-6">translate</span>
+            </span>
+          </button>
+          <button type="button" class="btn btn-warning btn-lg custom-button"
             onclick="sendTo('#outputText','/query/input')">
             <span class="custom-button-content">
               <i class="glyphicon glyphicon-search"></i>

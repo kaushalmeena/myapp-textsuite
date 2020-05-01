@@ -9,21 +9,21 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{{ url_for('home00') }}">text-suite</a>
+      <a class="navbar-brand" href="{{ url_for('app.home00') }}">text-suite</a>
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse-group">
       <ul class="nav navbar-nav">
         <li class="{{'active' if title=='main-home'}}">
-          <a href="{{ url_for('home00') }}">home</a>
+          <a href="{{ url_for('app.home00') }}">home</a>
         </li>
         <li class="{{'active' if title=='extract-home'}}">
-          <a href="{{ url_for('home01') }}">extract</a>
+          <a href="{{ url_for('app.home01') }}">extract</a>
         </li>
         <li class="{{'active' if title=='translate-home'}}">
-          <a href="{{ url_for('home02') }}">translate</a>
+          <a href="{{ url_for('app.home02') }}">translate</a>
         </li>
         <li class="{{'active' if title=='query-home'}}">
-          <a href="{{ url_for('home03') }}">query</a>
+          <a href="{{ url_for('app.home03') }}">query</a>
         </li>
       </ul>
     </div>

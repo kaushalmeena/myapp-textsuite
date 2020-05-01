@@ -52,7 +52,7 @@ $ cp .env.default .env
 To run the project simply run:
 
 ```bash
-$ poetry run dev
+$ poetry run python wsgi.py
 ```
 
 Your app should now be running on [localhost:5000](http://localhost:5000/).

@@ -2,23 +2,42 @@
 {% block content %}
 <main class="container">
   <ol class="breadcrumb">
-    <li><a href="{{ url_for('home00') }}">home</a></li>
-    <li><a href="{{ url_for('home01') }}">extract</a></li>
-    <li><a href="{{ url_for('source') }}">source</a></li>
-    <li><a href="javascript:void(0)">image-url</a></li>
+    <li><a href="{{ url_for('app.home00') }}">home</a></li>
+    <li><a href="{{ url_for('app.home01') }}">extract</a></li>
+    <li><a href="{{ url_for('app.source') }}">source</a></li>
+    <li><a href="javascript:void(0)">image-upload</a></li>
   </ol>
   <div class="thumbnail">
     <div class="well">
       <dl class="dl-horizontal font-size-22">
         <dt>step 2</dt>
-        <dd>enter url of image</dd>
+        <dd>upload your image</dd>
       </dl>
-      <form action="{{ url_for( 'extract_output' ) }}" method="post">
-        <input hidden type="text" name="image_source" value="image-url" />
+      <div hidden id="imageDiv" class="well text-center">
+        <img id="extractImage" class="max-height-300 max-width-full"
+          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="extract-image"
+          onerror="handleUploadError()">
+      </div>
+      <div hidden id="alertDiv" class="alert alert-danger margin-top-10" role="alert">
+        <div class="custom-alert-content">
+          <div class="flex-grow-1">
+            <strong>error :</strong>
+            <span id="alertText"></span>
+          </div>
+          <button type="button" class="btn btn-link btn-sm text-danger" onclick="hideAlert()">
+            <span class="text-danger">
+              <i class="glyphicon glyphicon-remove" aria-hidden="true"></i>
+            </span>
+          </button>
+        </div>
+      </div>
+      <form action="{{ url_for('app.extract_output') }}" method="post" enctype="multipart/form-data">
+        <input hidden id="imageContainer" type="text" name="image_container" />
+        <input hidden type="text" name="image_source" value="image-upload" />
         <div class="form-group">
-          <input id="imageContainer" class="form-control" type="url" name="image_container"
-            aria-describedby="imageContainerHelpBlock" required />
-          <span id="imageContainerHelpBlock" class="help-block">enter url of your image</span>
+          <input id="imageFile" type="file" class="form-control" accept="image/*" aria-describedby="imageFileHelpBlock"
+            onchange="readUpload()" required />
+          <span id="imageFileHelpBlock" class="help-block">select image from your local files</span>
         </div>
         <div class="form-group">
           <select id="fromLanguage" class="form-control" name="from_language" aria-describedby="fromLanguageHelpBlock">
@@ -58,7 +77,7 @@
               <span class="margin-left-6">extract</span>
             </span>
           </button>
-          <button type="button" class="btn btn-default btn-lg custom-button" onclick="resetURL()">
+          <button type="button" class="btn btn-default btn-lg custom-button" onclick="resetUpload()">
             <span class="custom-button-content">
               <i class="glyphicon glyphicon-refresh" aria-hidden="true"></i>
               <span class="margin-left-6">reset</span>

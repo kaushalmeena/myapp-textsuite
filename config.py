@@ -1,15 +1,11 @@
 """Contains configurations to be used while running TextSuite."""
 
 from os import environ
-from os.path import dirname, join
 
 from dotenv import load_dotenv
 
-
-DOTENV_PATH = join(dirname(dirname(__file__)), ".env")
-
 # Load environment variables from '.env' file
-load_dotenv(dotenv_path=DOTENV_PATH)
+load_dotenv()
 
 
 class BaseConfig:

@@ -2,8 +2,8 @@
 {% block content %}
 <main class="container">
   <ol class="breadcrumb">
-    <li><a href="{{ url_for('home00') }}">home</a></li>
-    <li><a href="{{ url_for('home01') }}">extract</a></li>
+    <li><a href="{{ url_for('app.home00') }}">home</a></li>
+    <li><a href="{{ url_for('app.home01') }}">extract</a></li>
     <li><a href="javascript:void(0)">source</a></li>
   </ol>
   <div class="thumbnail">
@@ -13,23 +13,23 @@
         <dd>select source from where to upload image</dd>
       </dl>
       <div class="custom-button-group" role="group" aria-label="source-group">
-        <a class="btn btn-primary btn-lg btn-block margin-top-3 margin-bottom-3" href="{{ url_for('image_source00') }}"
-          role="button">
+        <a class="btn btn-primary btn-lg btn-block margin-top-3 margin-bottom-3"
+          href="{{ url_for('app.image_source00') }}" role="button">
           <div class="custom-button-content">
             <i class="glyphicon glyphicon-open"></i>
             <div class="margin-left-6">image-upload</div>
           </div>
         </a>
-        <a class="btn btn-success btn-lg btn-block margin-top-3 margin-bottom-3" href="{{ url_for('image_source02') }}"
-          role="button">
+        <a class="btn btn-success btn-lg btn-block margin-top-3 margin-bottom-3"
+          href="{{ url_for('app.image_source02') }}" role="button">
           <div class="custom-button-content">
             <i class="glyphicon glyphicon-link"></i>
             <div class="margin-left-6">image-url</div>
           </div>
         </a>
         {% if mobile_device == false %}
-        <a class="btn btn-warning btn-lg btn-block margin-top-3 margin-bottom-3" href="{{ url_for('image_source01') }}"
-          role="button">
+        <a class="btn btn-warning btn-lg btn-block margin-top-3 margin-bottom-3"
+          href="{{ url_for('app.image_source01') }}" role="button">
           <div class="custom-button-content">
             <i class="glyphicon glyphicon-camera"></i>
             <div class="margin-left-6">webcam-capture</div>

@@ -1,12 +1,8 @@
-"""Python script for TextSuite server."""
+"""Contains routes for TextSuite."""
 
 from base64 import b64encode
 
-from app.config import DevelopmentConfig
-
-from flask import Flask, render_template, request
-
-from flask_compress import Compress
+from flask import Blueprint, current_app, render_template, request
 
 from googletrans import Translator
 
@@ -14,37 +10,35 @@ import requests
 
 from user_agents import parse
 
-app = Flask(__name__)
-
-# Compress flask app's responses with gzip
-Compress(app)
+# Initialise Blueprint
+app_blueprint = Blueprint("app", __name__)
 
 
-@app.route("/")
+@app_blueprint.route("/")
 def home00():
     """Home00 page which displays main home screen."""
     return render_template("main-home.html", title="main-home")
 
 
-@app.route("/extract")
+@app_blueprint.route("/extract")
 def home01():
     """Home01 page which displays extract home screen."""
     return render_template("extract-home.html", title="extract-home")
 
 
-@app.route("/translate")
+@app_blueprint.route("/translate")
 def home02():
     """Home02 page which displays translate home screen."""
     return render_template("translate-home.html", title="translate-home")
 
 
-@app.route("/query")
+@app_blueprint.route("/query")
 def home03():
     """Home03 page which displays query home screen."""
     return render_template("query-home.html", title="query-home")
 
 
-@app.route("/extract/source")
+@app_blueprint.route("/extract/source")
 def source():
     """Source page which displays sources for image upload."""
     user_agent = parse(request.user_agent.string)
@@ -55,25 +49,25 @@ def source():
     )
 
 
-@app.route("/extract/source/image-upload")
+@app_blueprint.route("/extract/source/image-upload")
 def image_source00():
     """Source00 page which provide functionality to upload image via image-upload."""
     return render_template("extract-source-image-upload.html", title="image-upload")
 
 
-@app.route("/extract/source/webcam-capture")
+@app_blueprint.route("/extract/source/webcam-capture")
 def image_source01():
     """Source01 page which provide functionality to upload image via webcam-capture."""
     return render_template("extract-source-webcam-capture.html", title="webcam-capture")
 
 
-@app.route("/extract/source/image-url")
+@app_blueprint.route("/extract/source/image-url")
 def image_source02():
     """Source02 page which provide functionality to upload image via webcam-capture."""
     return render_template("extract-source-image-url.html", title="image-url")
 
 
-@app.route("/extract/output", methods=["POST"])
+@app_blueprint.route("/extract/output", methods=["POST"])
 def extract_output():
     """Extract-Output page which displays results for text extraction."""
     template_params = {"title": "extract-output"}
@@ -83,7 +77,7 @@ def extract_output():
         image_source = request.form.get("image_source")
         from_language = request.form.get("from_language", "eng")
 
-        api_key = app.config.get("OCR_API_KEY")
+        api_key = current_app.config.get("OCR_API_KEY")
         extract_url = "https://api.ocr.space/parse/image"
 
         extract_payload = {"apiKey": api_key}
@@ -124,7 +118,7 @@ def extract_output():
     return render_template("extract-output.html", **template_params)
 
 
-@app.route("/translate/input", methods=["GET", "POST"])
+@app_blueprint.route("/translate/input", methods=["GET", "POST"])
 def translate_input():
     """Translate-Input page which allow users to enter text to be translated."""
     template_params = {"title": "translate-input"}
@@ -135,7 +129,7 @@ def translate_input():
     return render_template("translate-input.html", **template_params)
 
 
-@app.route("/translate/output", methods=["POST"])
+@app_blueprint.route("/translate/output", methods=["POST"])
 def translate_output():
     """Translate-Output page which displays results for text translation."""
     template_params = {"title": "translate-output"}
@@ -162,7 +156,7 @@ def translate_output():
     return render_template("translate-output.html", **template_params)
 
 
-@app.route("/query/input", methods=["GET", "POST"])
+@app_blueprint.route("/query/input", methods=["GET", "POST"])
 def query_input():
     """Query-Input page which allow users to enter text to be queried."""
     template_params = {"title": "query-input"}
@@ -173,7 +167,7 @@ def query_input():
     return render_template("query-input.html", title="query-input")
 
 
-@app.route("/query/output", methods=["POST"])
+@app_blueprint.route("/query/output", methods=["POST"])
 def query_output():
     """Query-Output page which displays results for text querying."""
     template_params = {"title": "query-output"}
@@ -181,7 +175,7 @@ def query_output():
     if "input_text" in request.form:
         input_text = request.form.get("input_text")
 
-        app_id = app.config.get("WOLFRAMALPHA_APP_ID")
+        app_id = current_app.config.get("WOLFRAMALPHA_APP_ID")
         query_url = "http://api.wolframalpha.com/v1/simple"
 
         query_payload = {
@@ -208,8 +202,3 @@ def query_output():
         template_params["error_content"] = "bad request"
 
     return render_template("query-output.html", **template_params)
-
-
-if __name__ == "__main__":
-    app.config.from_object(DevelopmentConfig())
-    app.run()

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="container">
+  <ol class="breadcrumb">
+    <li><a href="{{ url_for('app.home00') }}">home</a></li>
+    <li><a href="{{ url_for('app.home01') }}">extract</a></li>
+    <li><a href="{{ url_for('app.source') }}">source</a></li>
+    <li><a href="javascript:void(0)">image-url</a></li>
+  </ol>
+  <div class="thumbnail">
+    <div class="well">
+      <dl class="dl-horizontal font-size-22">
+        <dt>step 2</dt>
+        <dd>enter url of image</dd>
+      </dl>
+      <form action="{{ url_for('app.extract_output') }}" method="post">
+        <input hidden type="text" name="image_source" value="image-url" />
+        <div class="form-group">
+          <input id="imageContainer" class="form-control" type="url" name="image_container"
+            aria-describedby="imageContainerHelpBlock" required />
+          <span id="imageContainerHelpBlock" class="help-block">enter url of your image</span>
+        </div>
+        <div class="form-group">
+          <select id="fromLanguage" class="form-control" name="from_language" aria-describedby="fromLanguageHelpBlock">
+            <option value="detect" selected="selected">[ Detect ]</option>
+            <option value="ara">Arabic</option>
+            <option value="bul">Bulgarian</option>
+            <option value="cht">Chinese(Traditional)</option>
+            <option value="chs">Chinese(Simplified)</option>
+            <option value="hrv">Croatian</option>
+            <option value="cze">Czech</option>
+            <option value="dan">Danish</option>
+            <option value="dut">Dutch</option>
+            <option value="eng">English</option>
+            <option value="fin">Finnish</option>
+            <option value="fre">French</option>
+            <option value="ger">German</option>
+            <option value="gre">Greek</option>
+            <option value="hun">Hungarian</option>
+            <option value="ita">Italian</option>
+            <option value="jpn">Japanese</option>
+            <option value="kor">Korean</option>
+            <option value="nor">Norwegian</option>
+            <option value="pol">Polish</option>
+            <option value="por">Portuguese</option>
+            <option value="rus">Russian</option>
+            <option value="slv">Slovenian</option>
+            <option value="spa">Spanish</option>
+            <option value="swe">Swedish</option>
+            <option value="tur">Turkish</option>
+          </select>
+          <span id="fromLanguageHelpBlock" class="help-block">select language of text in image</span>
+        </div>
+        <div class="form-button-group">
+          <button type="submit" class="btn btn-success btn-lg custom-button">
+            <span class="custom-button-content">
+              <i class="glyphicon glyphicon-cog" aria-hidden="true"></i>
+              <span class="margin-left-6">extract</span>
+            </span>
+          </button>
+          <button type="button" class="btn btn-default btn-lg custom-button" onclick="resetURL()">
+            <span class="custom-button-content">
+              <i class="glyphicon glyphicon-refresh" aria-hidden="true"></i>
+              <span class="margin-left-6">reset</span>
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -2,8 +2,8 @@
 {% block content %}
 <main class="container">
   <ol class="breadcrumb">
-    <li><a href="{{ url_for('home00') }}">home</a></li>
-    <li><a href="{{ url_for('home02') }}">translate</a></li>
+    <li><a href="{{ url_for('app.home00') }}">home</a></li>
+    <li><a href="{{ url_for('app.home02') }}">translate</a></li>
     <li><a href="javascript:void(0)">input</a></li>
   </ol>
   <div class="thumbnail">
@@ -12,7 +12,7 @@
         <dt>step 1</dt>
         <dd>enter text for translation</dd>
       </dl>
-      <form action="{{ url_for( 'translate_output' ) }}" method="post">
+      <form action="{{ url_for('app.translate_output') }}" method="post">
         <div class="form-group">
           <textarea id="inputText" name="input_text" class="form-control" rows="5" aria-describedby="inputTextHelpBlock"
             required>{{input_text}}</textarea>
