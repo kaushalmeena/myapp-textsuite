@@ -1,4 +1,5 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% block content %}
 <main class="container">
   <ol class="breadcrumb">
     <li><a href="{{ url_for('home00') }}">home</a></li>
@@ -19,13 +20,13 @@
       {% endif %}
       {% if image_container %}
       <div id="imageDiv" class="well text-center">
-        <img src="{{image_container}}" class="max-width-full" alt="query-image">
+        <img class="max-width-full" src="{{image_container}}" alt="query-image">
       </div>
       {% endif %}
       <form>
         <div class="form-button-group">
           {% if image_container %}
-          <a href="{{image_container}}" download="query_image.gif" class="btn btn-success btn-lg custom-button"
+          <a class="btn btn-success btn-lg custom-button" href="{{image_container}}" download="query_image.gif"
             role="button">
             <div class="custom-button-content">
               <i class="glyphicon glyphicon-save"></i>
@@ -35,10 +36,10 @@
           {% endif %}
           <button type="button" class="btn btn-warning btn-lg custom-button"
             onclick="sendTo('#outputText','/translate/input')">
-            <div class="custom-button-content">
+            <span class="custom-button-content">
               <i class="glyphicon glyphicon-cog"></i>
-              <div class="margin-left-6">translate</div>
-            </div>
+              <span class="margin-left-6">translate</span>
+            </span>
           </button>
         </div>
       </form>

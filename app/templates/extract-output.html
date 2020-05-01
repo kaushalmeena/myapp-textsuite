@@ -1,4 +1,5 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% block content %}
 <main class="container">
   <ol class="breadcrumb">
     <li><a href="{{ url_for('home00') }}">home</a></li>
@@ -33,23 +34,23 @@
         <div class="form-button-group">
           <button type="button" class="btn btn-success btn-lg custom-button"
             onclick="sendTo('#outputText','/translate/input')">
-            <div class="custom-button-content">
+            <span class="custom-button-content">
               <i class="glyphicon glyphicon-cog"></i>
-              <div class="margin-left-6">translate</div>
-            </div>
+              <span class="margin-left-6">translate</span>
+            </span>
           </button>
           <button type="button" class="btn btn-warning btn-lg custom-button"
             onclick="sendTo('#outputText','/query/input')">
-            <div class="custom-button-content">
+            <span class="custom-button-content">
               <i class="glyphicon glyphicon-search"></i>
-              <div class="margin-left-6">query</div>
-            </div>
+              <span class="margin-left-6">query</span>
+            </span>
           </button>
           <button type="button" class="btn btn-default btn-lg custom-button" onclick="copyText()">
-            <div class="custom-button-content">
+            <span class="custom-button-content">
               <i class="glyphicon glyphicon-copy"></i>
-              <div class="margin-left-6">copy</div>
-            </div>
+              <span class="margin-left-6">copy</span>
+            </span>
           </button>
         </div>
       </form>

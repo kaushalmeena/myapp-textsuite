@@ -1,4 +1,5 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+{% block content %}
 <main class="container">
   <ol class="breadcrumb">
     <li><a href="{{ url_for('home00') }}">home</a></li>
@@ -13,7 +14,9 @@
         <dd>upload your image</dd>
       </dl>
       <div hidden id="imageDiv" class="well text-center">
-        <img id="extractImage" class="max-height-300 max-width-full" alt="extract-image" onerror="handleUploadError()">
+        <img id="extractImage" class="max-height-300 max-width-full"
+          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="extract-image"
+          onerror="handleUploadError()">
       </div>
       <div hidden id="alertDiv" class="alert alert-danger margin-top-10" role="alert">
         <div class="custom-alert-content">
@@ -69,16 +72,16 @@
         </div>
         <div class="form-button-group">
           <button type="submit" class="btn btn-success btn-lg custom-button">
-            <div class="custom-button-content">
+            <span class="custom-button-content">
               <i class="glyphicon glyphicon-cog" aria-hidden="true"></i>
-              <div class="margin-left-6">extract</div>
-            </div>
+              <span class="margin-left-6">extract</span>
+            </span>
           </button>
           <button type="button" class="btn btn-default btn-lg custom-button" onclick="resetUpload()">
-            <div class="custom-button-content">
+            <span class="custom-button-content">
               <i class="glyphicon glyphicon-refresh" aria-hidden="true"></i>
-              <div class="margin-left-6">reset</div>
-            </div>
+              <span class="margin-left-6">reset</span>
+            </span>
           </button>
         </div>
       </form>

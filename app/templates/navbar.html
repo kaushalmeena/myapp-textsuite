@@ -1,5 +1,5 @@
 {% block navbar %}
-<nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-static-top">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-group"
@@ -14,24 +14,16 @@
     <div class="collapse navbar-collapse" id="navbar-collapse-group">
       <ul class="nav navbar-nav">
         <li class="{{'active' if title=='main-home'}}">
-          <a href="{{ url_for('home00') }}">
-            home
-          </a>
+          <a href="{{ url_for('home00') }}">home</a>
         </li>
         <li class="{{'active' if title=='extract-home'}}">
-          <a href="{{ url_for('home01') }}">
-            extract
-          </a>
+          <a href="{{ url_for('home01') }}">extract</a>
         </li>
         <li class="{{'active' if title=='translate-home'}}">
-          <a href="{{ url_for('home02') }}">
-            translate
-          </a>
+          <a href="{{ url_for('home02') }}">translate</a>
         </li>
         <li class="{{'active' if title=='query-home'}}">
-          <a href="{{ url_for('home03') }}">
-            query
-          </a>
+          <a href="{{ url_for('home03') }}">query</a>
         </li>
       </ul>
     </div>
