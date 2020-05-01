@@ -1,17 +1,7 @@
-"""
-Python script for TextSuite deployment.
-"""
+"""Starts TextSuite app in production mode."""
 
-from app.main import app
 from app.config import ProductionConfig
-
-
-def start():
-    """
-    Start flask development server
-    """
-    app.config.from_object(ProductionConfig())
-    app.run()
+from app.main import app
 
 
 if __name__ == "__main__":

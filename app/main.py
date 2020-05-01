@@ -1,16 +1,18 @@
-"""
-Python script for TextSuite server.
-"""
+"""Python script for TextSuite server."""
 
-from flask import Flask, render_template, request
-from flask_compress import Compress
-from user_agents import parse
-from googletrans import Translator
 from base64 import b64encode
 
 from app.config import DevelopmentConfig
 
+from flask import Flask, render_template, request
+
+from flask_compress import Compress
+
+from googletrans import Translator
+
 import requests
+
+from user_agents import parse
 
 app = Flask(__name__)
 
@@ -20,41 +22,31 @@ Compress(app)
 
 @app.route("/")
 def home00():
-    """
-    Handler for Home00 page which displays main home screen.
-    """
+    """Home00 page which displays main home screen."""
     return render_template("main-home.html", title="main-home")
 
 
 @app.route("/extract")
 def home01():
-    """
-    Handler for Home01 page which displays extract home screen.
-    """
+    """Home01 page which displays extract home screen."""
     return render_template("extract-home.html", title="extract-home")
 
 
 @app.route("/translate")
 def home02():
-    """
-    Handler for Home02 page which displays translate home screen.
-    """
+    """Home02 page which displays translate home screen."""
     return render_template("translate-home.html", title="translate-home")
 
 
 @app.route("/query")
 def home03():
-    """
-    Handler for Home03 page which displays query home screen.
-    """
+    """Home03 page which displays query home screen."""
     return render_template("query-home.html", title="query-home")
 
 
 @app.route("/extract/source")
 def source():
-    """
-    Handler for Source page which displays sources for image upload.
-    """
+    """Source page which displays sources for image upload."""
     user_agent = parse(request.user_agent.string)
     mobile_device = user_agent.is_mobile
 
@@ -65,37 +57,26 @@ def source():
 
 @app.route("/extract/source/image-upload")
 def image_source00():
-    """
-    Handler for Source00 page which provide functionality to upload image via
-    image-upload.
-    """
+    """Source00 page which provide functionality to upload image via image-upload."""
     return render_template("extract-source-image-upload.html", title="image-upload")
 
 
 @app.route("/extract/source/webcam-capture")
 def image_source01():
-    """
-    Handler for Source01 page which provide functionality to upload image via
-    webcam-capture.
-    """
+    """Source01 page which provide functionality to upload image via webcam-capture."""
     return render_template("extract-source-webcam-capture.html", title="webcam-capture")
 
 
 @app.route("/extract/source/image-url")
 def image_source02():
-    """
-    Handler for Source02 page which provide functionality to upload image via
-    webcam-capture.
-    """
+    """Source02 page which provide functionality to upload image via webcam-capture."""
     return render_template("extract-source-image-url.html", title="image-url")
 
 
 @app.route("/extract/output", methods=["POST"])
 def extract_output():
-    """
-    Handler for Extract-Output page which displays results for text extraction.
-    """
-    template_values = {"title": "extract-output"}
+    """Extract-Output page which displays results for text extraction."""
+    template_params = {"title": "extract-output"}
 
     if "image_container" in request.form and "image_source" in request.form:
         image_container = request.form.get("image_container")
@@ -115,7 +96,7 @@ def extract_output():
         if not from_language == "detect":
             extract_payload["language"] = from_language
 
-        template_values["image_source"] = image_source
+        template_params["image_source"] = image_source
 
         extract_response = requests.post(extract_url, extract_payload)
 
@@ -128,41 +109,36 @@ def extract_output():
                 for item in extract_data["ParsedResults"]:
                     output_text += item["ParsedText"]
 
-                template_values["output_text"] = output_text
+                template_params["output_text"] = output_text
             else:
-                template_values["error_title"] = "error"
-                template_values["error_content"] = extract_data["ErrorMessage"][0]
+                template_params["error_title"] = "error"
+                template_params["error_content"] = extract_data["ErrorMessage"][0]
         else:
-            template_values["error_title"] = "error"
-            template_values["error_content"] = "internal server error"
+            template_params["error_title"] = "error"
+            template_params["error_content"] = "internal server error"
     else:
-        template_values["error_title"] = "error 400"
-        template_values["error_content"] = "bad request"
-        template_values["image_source"] = "image_upload"
+        template_params["error_title"] = "error 400"
+        template_params["error_content"] = "bad request"
+        template_params["image_source"] = "image_upload"
 
-    return render_template("extract-output.html", **template_values)
+    return render_template("extract-output.html", **template_params)
 
 
 @app.route("/translate/input", methods=["GET", "POST"])
 def translate_input():
-    """
-    Handler for Translate-Input page which allow users to enter text to be
-    translated.
-    """
-    template_values = {"title": "translate-input"}
+    """Translate-Input page which allow users to enter text to be translated."""
+    template_params = {"title": "translate-input"}
 
     if request.method == "POST":
-        template_values["input_text"] = request.form.get("input_text")
+        template_params["input_text"] = request.form.get("input_text")
 
-    return render_template("translate-input.html", **template_values)
+    return render_template("translate-input.html", **template_params)
 
 
 @app.route("/translate/output", methods=["POST"])
 def translate_output():
-    """
-    Handler for Translate-Output page which displays results for text translation.
-    """
-    template_values = {"title": "translate-output"}
+    """Translate-Output page which displays results for text translation."""
+    template_params = {"title": "translate-output"}
 
     if "input_text" in request.form and "to_language" in request.form:
         input_text = request.form.get("input_text")
@@ -178,33 +154,29 @@ def translate_output():
                 input_text, src=from_language, dest=to_language
             )
 
-        template_values["output_text"] = translate_response.text
+        template_params["output_text"] = translate_response.text
     else:
-        template_values["error_title"] = "error 400"
-        template_values["error_content"] = "bad request"
+        template_params["error_title"] = "error 400"
+        template_params["error_content"] = "bad request"
 
-    return render_template("translate-output.html", **template_values)
+    return render_template("translate-output.html", **template_params)
 
 
 @app.route("/query/input", methods=["GET", "POST"])
 def query_input():
-    """
-    Handler for Query-Input page which allow users to enter text to be queried.
-    """
-    template_values = {"title": "query-input"}
+    """Query-Input page which allow users to enter text to be queried."""
+    template_params = {"title": "query-input"}
 
     if request.method == "POST":
-        template_values["input_text"] = request.form.get("input_text")
+        template_params["input_text"] = request.form.get("input_text")
 
     return render_template("query-input.html", title="query-input")
 
 
 @app.route("/query/output", methods=["POST"])
 def query_output():
-    """
-    Handler for Query-Output page which displays results for text querying.
-    """
-    template_values = {"title": "query-output"}
+    """Query-Output page which displays results for text querying."""
+    template_params = {"title": "query-output"}
 
     if "input_text" in request.form:
         input_text = request.form.get("input_text")
@@ -227,23 +199,15 @@ def query_output():
 
             image_container = "data:image/gif;base64," + base_64_data
 
-            template_values["image_container"] = image_container
+            template_params["image_container"] = image_container
         else:
-            template_values["error_title"] = "error"
-            template_values["error_content"] = "internal server error"
+            template_params["error_title"] = "error"
+            template_params["error_content"] = "internal server error"
     else:
-        template_values["error_title"] = "error 400"
-        template_values["error_content"] = "bad request"
+        template_params["error_title"] = "error 400"
+        template_params["error_content"] = "bad request"
 
-    return render_template("query-output.html", **template_values)
-
-
-def start():
-    """
-    Start flask development server
-    """
-    app.config.from_object(DevelopmentConfig())
-    app.run()
+    return render_template("query-output.html", **template_params)
 
 
 if __name__ == "__main__":
