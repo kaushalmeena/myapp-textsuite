@@ -1,8 +1,9 @@
+brotli==1.0.7
 certifi==2020.4.5.1
 chardet==3.0.4
-click==7.1.1
+click==7.1.2
 flask==1.1.2
-flask-compress==1.4.0
+flask-compress==1.5.0
 googletrans==2.4.0
 gunicorn==20.0.4
 idna==2.9
