@@ -5,13 +5,13 @@
     <li><a href="{{ url_for('app.home00') }}">home</a></li>
     <li><a href="{{ url_for('app.home01') }}">extract</a></li>
     <li><a href="{{ url_for('app.source') }}">source</a></li>
-    {% if image_source == 'image-upload' %}
+    {%- if image_source == 'image-upload' -%}
     <li><a href="{{ url_for('app.image_source00') }}">image-upload</a></li>
-    {% elif image_source == 'image-url' %}
+    {%- elif image_source == 'image-url' -%}
     <li><a href="{{ url_for('app.image_source02') }}">image-url</a></li>
-    {% elif image_source == 'webcam-capture' %}
+    {%- elif image_source == 'webcam-capture' -%}
     <li><a href="{{ url_for('app.image_source01') }}">webcam-capture</a></li>
-    {% endif %}
+    {%- endif -%}
     <li><a href="javascript:void(0)">output</a></li>
   </ol>
   <div class="thumbnail">
