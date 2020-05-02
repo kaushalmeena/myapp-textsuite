@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<main class="container">
+  <ol class="breadcrumb">
+    <li><a href="{{ url_for('app.home00') }}">home</a></li>
+    <li><a href="javascript:void(0)">error</a></li>
+  </ol>
+  <div class="thumbnail">
+    <div class="jumbotron">
+      <h1>400 bad request</h1>
+      <p class="lead">the request cannot be fulfilled due to bad syntax</p>
+      <a href="{{ url_for('app.home00') }}" role="button">
+        go back to home
+      </a>
+    </div>
+  </div>
+</main>
+{% endblock %}

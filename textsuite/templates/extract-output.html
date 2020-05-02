@@ -20,17 +20,10 @@
         <dt>step 3</dt>
         <dd>check out ocr results</dd>
       </dl>
-      {% if error_title and error_content %}
-      <div class="alert alert-danger margin-top-10" role="alert">
-        <strong>{{error_title}} :</strong> {{error_content}}
-      </div>
-      {% endif %}
       <form>
-        {% if output_text %}
         <div class="form-group">
           <textarea id="outputText" name="output_text" class="form-control" rows="5">{{output_text}}</textarea>
         </div>
-        {% endif %}
         <div class="form-button-group">
           <button type="button" class="btn btn-success btn-lg custom-button"
             onclick="sendTo('#outputText','/translate/input')">

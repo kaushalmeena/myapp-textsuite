@@ -1,4 +1,4 @@
-"""Contains WSGI for TextSuite."""
+"""Contains WSGI for textsuite app."""
 
 from os import environ
 
@@ -11,7 +11,7 @@ app = create_app(app_config)
 
 
 def start():
-    """Start TextSuite web server."""
+    """Start textsuite web server."""
     app.run()
 
 

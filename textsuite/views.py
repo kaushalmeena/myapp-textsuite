@@ -1,4 +1,4 @@
-"""Contains routes for TextSuite."""
+"""Contains views for textsuite app."""
 
 from base64 import b64encode
 
@@ -78,7 +78,7 @@ def extract_output():
         from_language = request.form.get("from_language", "eng")
 
         api_key = current_app.config.get("OCR_API_KEY")
-        extract_url = "https://api.ocr.space/parse/image"
+        extract_url = current_app.config.get("OCR_API_URL")
 
         extract_payload = {"apiKey": api_key}
 
@@ -92,28 +92,25 @@ def extract_output():
 
         template_params["image_source"] = image_source
 
-        extract_response = requests.post(extract_url, extract_payload)
-
-        if extract_response.status_code == 200:
-            extract_data = extract_response.json()
-
-            if extract_data["OCRExitCode"] == 1:
-                output_text = ""
-
-                for item in extract_data["ParsedResults"]:
-                    output_text += item["ParsedText"]
-
-                template_params["output_text"] = output_text
+        try:
+            extract_response = requests.post(extract_url, extract_payload)
+            if extract_response.status_code == 200:
+                extract_data = extract_response.json()
+                if extract_data["OCRExitCode"] == 1:
+                    output_text = ""
+                    for item in extract_data["ParsedResults"]:
+                        output_text += item["ParsedText"]
+                    template_params["output_text"] = output_text
+                else:
+                    template_params["output_text"] = "\n".join(
+                        extract_data["ErrorMessage"]
+                    )
             else:
-                template_params["error_title"] = "error"
-                template_params["error_content"] = extract_data["ErrorMessage"][0]
-        else:
-            template_params["error_title"] = "error"
-            template_params["error_content"] = "internal server error"
+                return error500()
+        except Exception:
+            return error500()
     else:
-        template_params["error_title"] = "error 400"
-        template_params["error_content"] = "bad request"
-        template_params["image_source"] = "image_upload"
+        return error400()
 
     return render_template("extract-output.html", **template_params)
 
@@ -141,17 +138,18 @@ def translate_output():
 
         translator = Translator()
 
-        if from_language == "detect":
-            translate_response = translator.translate(input_text, dest=to_language)
-        else:
-            translate_response = translator.translate(
-                input_text, src=from_language, dest=to_language
-            )
+        translate_params = {"dest": to_language}
 
-        template_params["output_text"] = translate_response.text
+        if not from_language == "detect":
+            translate_params["src"] = from_language
+
+        try:
+            translate_response = translator.translate(input_text, **translate_params)
+            template_params["output_text"] = translate_response.text
+        except Exception:
+            return error500()
     else:
-        template_params["error_title"] = "error 400"
-        template_params["error_content"] = "bad request"
+        return error400()
 
     return render_template("translate-output.html", **template_params)
 
@@ -176,7 +174,7 @@ def query_output():
         input_text = request.form.get("input_text")
 
         app_id = current_app.config.get("WOLFRAMALPHA_APP_ID")
-        query_url = "http://api.wolframalpha.com/v1/simple"
+        query_url = current_app.config.get("WOLFRAMALPHA_API_URL")
 
         query_payload = {
             "appid": app_id,
@@ -185,20 +183,33 @@ def query_output():
             "units": "metric",
         }
 
-        query_response = requests.get(query_url, query_payload)
-
-        if query_response.status_code == 200:
-            query_content = query_response.content
-            base_64_data = str(b64encode(query_content).decode("utf-8"))
-
-            image_container = "data:image/gif;base64," + base_64_data
-
-            template_params["image_container"] = image_container
-        else:
-            template_params["error_title"] = "error"
-            template_params["error_content"] = "internal server error"
+        try:
+            query_response = requests.get(query_url, query_payload)
+            if query_response.status_code == 200:
+                query_content = query_response.content
+                base_64_data = str(b64encode(query_content).decode("utf-8"))
+                image_container = "data:image/gif;base64," + base_64_data
+                template_params["image_container"] = image_container
+            else:
+                return error500()
+        except Exception:
+            return error500()
     else:
-        template_params["error_title"] = "error 400"
-        template_params["error_content"] = "bad request"
+        return error400()
 
     return render_template("query-output.html", **template_params)
+
+
+def error400(exception=None):
+    """Error 404 page."""
+    return render_template("400.html", title="error 400"), 400
+
+
+def error404(exception=None):
+    """Error 404 page."""
+    return render_template("404.html", title="error 404"), 404
+
+
+def error500(exception=None):
+    """Error 500 page."""
+    return render_template("500.html", title="error 500"), 500

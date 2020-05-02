@@ -1,4 +1,4 @@
-"""Contains app factory for TextSuite."""
+"""Contains app factory for textsuite app."""
 
 from flask import Flask
 
@@ -14,9 +14,14 @@ def create_app(app_config):
     compress.init_app(app)
 
     with app.app_context():
-        from textsuite.routes import app_blueprint
+        from textsuite.views import app_blueprint, error400, error404, error500
 
         # Register blueprints
         app.register_blueprint(app_blueprint)
+
+        # Register error pages
+        app.register_error_handler(400, error400)
+        app.register_error_handler(404, error404)
+        app.register_error_handler(500, error500)
 
         return app
