@@ -4,7 +4,7 @@ A web app which uses various APIs to achieve text extraction, text translation a
 
 ## Requirements
 
-To install and run these examples you need:
+To install and run this project you need:
 
 - [Python 3.7+](https://www.python.org/downloads/ "Python 3.7+")
 - [Poetry](https://python-poetry.org/ "Poetry")
