@@ -1,7 +1,7 @@
 {
   "name": "myapp-textsuite",
   "description": "A web app which uses various APIs to achieve text extraction, text translation and text querying.",
-  "repository": "https://github.com/kaushalmeena1996/myapp-textsuite",
+  "repository": "https://github.com/kaushalmeena/myapp-textsuite",
   "env": {
     "OCR_API_KEY": {
       "description": "API key from ocr.space for converting images to text."

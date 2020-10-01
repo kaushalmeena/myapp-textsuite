@@ -17,7 +17,7 @@ To set up everything in your local machine, you need to follow these steps:
 1. Clone this repo and then change directory to the `myapp-textsuite` folder:
 
 ```bash
-$ git clone https://github.com/kaushalmeena1996/myapp-textsuite.git
+$ git clone https://github.com/kaushalmeena/myapp-textsuite.git
 $ cd myapp-textsuite
 ```
 

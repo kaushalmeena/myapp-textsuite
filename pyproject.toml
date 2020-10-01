@@ -4,7 +4,7 @@ version = "2.0.0"
 description = "A web app which uses various api to achieve text extraction, text translation and text querying."
 authors = ["kaushalmeena <kaushal.meena1996@gmail.com>"]
 readme = "ReadMe.md"
-repository = "https://github.com/kaushalmeena1996/myapp-textsuite"
+repository = "https://github.com/kaushalmeena/myapp-textsuite"
 packages = [
     { include = "textsuite" }
 ]
